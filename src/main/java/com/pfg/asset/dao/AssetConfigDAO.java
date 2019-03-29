@@ -17,6 +17,7 @@ import org.postgresql.copy.CopyManager;
 import com.pfg.asset.core.AssetException;
 import com.pfg.asset.core.DataSourceListener;
 import com.pfg.asset.dto.AssetConfig;
+import com.pfg.asset.util.AssetConstants;
 
 public class AssetConfigDAO {
 
@@ -25,6 +26,54 @@ public class AssetConfigDAO {
 	private String selectAssetConfig = "SELECT SMTP_HOST, SMTP_PORT, SMTP_USERNAME, SMTP_PASSWORD, SMPT_SENDER, SMTP_RECIPIENT, SMPT_REPLYTO, RECORDS_PER_PAGE, PAGINATION_COUNT, CRON_EXPRESSION, RENEWAL_PERIOD_OPTIONS, DEFAULT_FILTER_TYPE, DEFAULT_FILTER_VALUE FROM AssetConfig";
 	private String queryTableNames = "SELECT table_name FROM information_schema.tables WHERE table_schema = 'public'";
 	
+	private String updateAssetConfig = "UPDATE AssetConfig set SMTP_HOST=?, SMTP_PORT=?, SMTP_USERNAME=?, SMTP_PASSWORD=?, SMPT_SENDER=?, SMTP_RECIPIENT=?, SMPT_REPLYTO=?, RECORDS_PER_PAGE=?, PAGINATION_COUNT=?, CRON_EXPRESSION=?, RENEWAL_PERIOD_OPTIONS=?, DEFAULT_FILTER_TYPE=?, DEFAULT_FILTER_VALUE=?";
+
+	public int updateAssetConfig(AssetConfig assetConfig) {
+		logger.log(Level.INFO, "entered");
+		
+		Connection conn = null;
+	    PreparedStatement ps = null;
+	    int result = 0;
+	    try {
+		    if(assetConfig != null) {
+				conn = DataSourceListener.getAssetDS().getConnection();
+
+				logger.log(Level.INFO, "update SQL: {0} ", updateAssetConfig);
+				
+				ps = conn.prepareStatement(updateAssetConfig);
+				ps.setString(1, assetConfig.getSmtpHost());
+				ps.setString(2, assetConfig.getSmtpPort());
+				ps.setString(3, assetConfig.getSmtpUsername());
+				ps.setString(4, assetConfig.getSmtpPassword());
+				ps.setString(5, assetConfig.getSmtpSender());
+				ps.setString(6, assetConfig.getSmtpRecipient());
+				ps.setString(7, assetConfig.getSmtpReplyTo());
+				ps.setInt(8, assetConfig.getRecordsPerPage());
+				ps.setInt(9, assetConfig.getPaginationCount());
+				ps.setString(10, assetConfig.getCronExpression());
+				ps.setString(11, assetConfig.getRenewalPeriod());
+				ps.setString(12, assetConfig.getFilterType());
+				ps.setString(13, assetConfig.getFilterValue());
+
+				result = ps.executeUpdate();
+
+				logger.log(Level.INFO, "{0} row(s) modified.", result);
+		    }else {
+				logger.log(Level.INFO, AssetConstants.ERROR_INVALID_INPUT);
+		    	throw new AssetException(AssetConstants.ERROR_INVALID_INPUT);
+		    }
+	    } catch (Exception e) {
+			logger.log(Level.SEVERE, e.getMessage(), e);
+			throw new AssetException(e.getMessage());
+	    }
+	    finally {
+			DAOUtil.closePreparedStatement(ps);
+			DAOUtil.close(conn);
+	    }
+	    logger.log(Level.INFO, "exited");
+	    
+	    return result;
+	}
 
 	public AssetConfig selectAssetConfig() {
 		logger.log(Level.INFO, "AssetConfigDAO: selectAssetConfig() executed.");

@@ -44,24 +44,70 @@ public class SettingsController extends HttpServlet {
 			logger.log(Level.INFO, "tableName: {0}", tableName);
 			String action = request.getParameter("action");
 			logger.log(Level.INFO, "action: {0}", action);
+			
+			AssetConfig assetConfig  = DAOFactory.getInstance().getAssetConfigDAO().selectAssetConfig();
+
 			if("update".equalsIgnoreCase(action)) {
-				String recordsPerPage = request.getParameter("recordsPerPage");
-				String filterType = request.getParameter("filterType");
-				String filterValue = request.getParameter("filterValue");
-				int records = AssetConstants.DEFAULT_COUNT;
-				
-				if(Validator.isNotEmpty(recordsPerPage) && Validator.isAllNumbers(recordsPerPage)) {
-					records = Integer.parseInt(recordsPerPage);
+				try {
+					int records = AssetConstants.DEFAULT_COUNT;
+					
+					String smtpHostName = request.getParameter("smtpHostName");
+					String smtpPort = request.getParameter("smtpPort");
+					String smtpUserName = request.getParameter("smtpUserName");
+					String smtpPassword = request.getParameter("smtpPassword");
+					String smtpSender = request.getParameter("smtpSender");
+					String smtpRecipient = request.getParameter("smtpRecipient");
+					String smtpReplyTo = request.getParameter("smtpReplyTo");
+					String cronExpression = request.getParameter("cronExpression");
+					String recordsPerPage = request.getParameter("recordsPerPage");
+					String filterType = request.getParameter("filterType");
+					String filterValue = request.getParameter("filterValue");
+					String renewalPeriodOption = request.getParameter("renewalPeriodOption");
+	
+					if(Validator.isNotEmpty(recordsPerPage) && Validator.isAllNumbers(recordsPerPage)) {
+						records = Integer.parseInt(recordsPerPage);
+					}
+					if(Validator.isNotEmpty(filterType)) {
+						assetConfig.setFilterType(filterType);
+					}
+					if(Validator.isNotEmpty(filterValue)) {
+						assetConfig.setFilterValue(filterValue);
+					}
+					if(Validator.isNotEmpty(smtpHostName)) {
+						assetConfig.setSmtpHost(smtpHostName);
+					}
+					if(Validator.isNotEmpty(smtpPort)) {
+						assetConfig.setSmtpPort(smtpPort);
+					}
+					if(Validator.isNotEmpty(smtpUserName)) {
+						assetConfig.setSmtpUsername(smtpUserName);
+					}
+					if(Validator.isNotEmpty(smtpPassword)) {
+						assetConfig.setSmtpPassword(smtpPassword);
+					}
+					if(Validator.isNotEmpty(smtpSender)) {
+						assetConfig.setSmtpSender(smtpSender);
+					}
+					if(Validator.isNotEmpty(smtpRecipient)) {
+						assetConfig.setSmtpRecipient(smtpRecipient);
+					}
+					if(Validator.isNotEmpty(smtpReplyTo)) {
+						assetConfig.setSmtpReplyTo(smtpReplyTo);
+					}
+					if(Validator.isNotEmpty(cronExpression)) {
+						assetConfig.setCronExpression(cronExpression);
+					}
+					if(Validator.isNotEmpty(renewalPeriodOption)) {
+						assetConfig.setRenewalPeriod(renewalPeriodOption);
+					}
+					int rows = DAOFactory.getInstance().getAssetConfigDAO().updateAssetConfig(assetConfig);
+					message = rows + " row(s) updated.";
+					request.setAttribute(AssetConstants.MESSAGE_KEY, message);
+				} catch (Exception e) {
+					logger.log(Level.SEVERE, e.getMessage(), e);
+					message = e.getMessage();
+			    	request.setAttribute(AssetConstants.MESSAGE_KEY, message);
 				}
-				if(Validator.isEmpty(filterType)) {
-					filterType = AssetConstants.FILTER.RENEWAL.toString();
-				}
-				if(Validator.isEmpty(filterValue)) {
-					filterValue = AssetConstants.INTERVALS.get(0);
-				}
-				logger.log(Level.INFO, "filterType: {0}", filterType);
-				logger.log(Level.INFO, "filterValue: {0}", filterValue);
-				
 			}else if ("import".equalsIgnoreCase(action)) {
 				try {
 					Part filePart = request.getPart("importFileName");
@@ -92,7 +138,6 @@ public class SettingsController extends HttpServlet {
 				}
 			}
 			
-			AssetConfig assetConfig  = DAOFactory.getInstance().getAssetConfigDAO().selectAssetConfig();
 			List<String> tableNameList = DAOFactory.getInstance().getAssetConfigDAO().getTableNames();
 
 			Map<String,String> cronExpressions = new HashMap<>();
