@@ -1,0 +1,39 @@
+		  <nav class="navbar navbar-expand-md navbar-custom">
+			<a class="navbar-brand" href="#">
+				<img class="d-none d-md-block" src="${pageContext.servletContext.contextPath}/images/logo-desktop.png"><img class="d-block d-md-none" src="${pageContext.servletContext.contextPath}/images/logo-mobile.png">
+			</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+			  <!-- <span class="navbar-toggler-icon"></span> -->
+			  <i class="fa fa-bars fa-lg py-1 text-white"></i>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarCollapse">
+			  <ul class="navbar-nav mr-auto">
+				<li class="nav-item ${pageContext.request.requestURI eq '/asset/dashboard.jsp' ? 'active': ''}">
+				  <a class="nav-link" href="/asset/dashboard">Home</a>
+				</li>
+				<li class="nav-item ${pageContext.request.requestURI eq '/asset/filter.jsp' ? 'active': ''}">
+				  <a class="nav-link" href="/asset/filter">Search</a>
+				</li>
+				<li class="nav-item ${(pageContext.request.requestURI eq '/asset/asset-entry.jsp') || (pageContext.request.requestURI eq '/asset/asset-info.jsp') ? 'active': ''}">
+				  <a class="nav-link" href="/asset/entry">Asset Info</a>
+				</li>
+				<%-- 
+				<li class="nav-item ${pageContext.request.requestURI eq '/asset/product.jsp' ? 'active': ''}">
+				  <a class="nav-link" href="/asset/product">Product Info</a>
+				</li>
+				<li class="nav-item ${pageContext.request.requestURI eq '/asset/track.jsp' ? 'active': ''}">
+				  <a class="nav-link" href="/asset/track">Track Info</a>
+				</li>
+				<li class="nav-item ${pageContext.request.requestURI eq '/asset/oem.jsp' ? 'active': ''}">
+				  <a class="nav-link" href="/asset/oem">OEM Info</a>
+				</li>
+				<li class="nav-item ${pageContext.request.requestURI eq '/asset/deployment.jsp' ? 'active': ''}">
+				  <a class="nav-link" href="/asset/deployment">Deployment Info</a>
+				</li>
+				--%>
+				<li class="nav-item ${pageContext.request.requestURI eq '/asset/settings.jsp' ? 'active': ''}">
+				  <a class="nav-link" href="/asset/settings">Settings</a>
+				</li>
+			  </ul>
+			</div>
+		  </nav>
