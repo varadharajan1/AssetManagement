@@ -61,17 +61,19 @@ public class AssetNotificationJob implements Job{
 		
 		Properties props = new Properties();
 		props.put("mail.smtp.host", assetConfig.getSmtpHost());
-		props.put("mail.smtp.socketFactory.port", assetConfig.getSmtpPort());
+		props.put("mail.smtp.port", assetConfig.getSmtpPort());
+
+		/*props.put("mail.smtp.socketFactory.port", assetConfig.getSmtpPort());
 		props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
 		props.put("mail.smtp.auth", "true");
-		props.put("mail.smtp.port", assetConfig.getSmtpPort());
 		
 		Session session = Session.getInstance(props,
 		  new javax.mail.Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
 				return new PasswordAuthentication(assetConfig.getSmtpUsername(), assetConfig.getSmtpPassword());
 			}
-		  });
+		  });*/
+		Session session = Session.getDefaultInstance(props);  
 		
 		try {
 			Message message = new MimeMessage(session);
