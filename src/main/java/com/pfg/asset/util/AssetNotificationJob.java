@@ -5,6 +5,7 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.activation.DataHandler;
 import javax.mail.Message;
 import javax.mail.Multipart;
 import javax.mail.PasswordAuthentication;
@@ -14,6 +15,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+import javax.mail.util.ByteArrayDataSource;
 
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
@@ -23,7 +25,7 @@ import org.quartz.SchedulerException;
 import com.pfg.asset.core.AssetException;
 import com.pfg.asset.dao.DAOFactory;
 import com.pfg.asset.dto.AssetConfig;
-import com.pfg.asset.dto.AssetDetail;
+import com.pfg.asset.dto.AssetInfo;
 import com.pfg.asset.dto.FilterParam;
 
 public class AssetNotificationJob implements Job{
@@ -55,7 +57,7 @@ public class AssetNotificationJob implements Job{
 
 	private void sendRenewalNotification(AssetConfig assetConfig) {
 		FilterParam filter = new FilterParam(assetConfig.getFilterType(), assetConfig.getFilterValue());		
-		List<AssetDetail> filteredList = DAOFactory.getInstance().getAssetDetailDAO().filteredAssetDetail(filter);
+		List<AssetInfo> filteredList = DAOFactory.getInstance().getAssetInfoDAO().filteredAssetInfo(filter);
 		
 		Properties props = new Properties();
 		props.put("mail.smtp.host", assetConfig.getSmtpHost());
@@ -78,11 +80,8 @@ public class AssetNotificationJob implements Job{
 			message.setSubject("Asset Renewal Notification");
 			 
 			String msg = "<h3>Asset Renewal Notification\n</h3>";
-			msg += "<p>The below asset(s) are going to expire in 3 months.\n</p>";
+			msg += "<p>The enclosed assets are going to expire in 3 months.\n</p>";
 			
-			for(AssetDetail assetDetail : filteredList ) {
-				msg += "<p>"+assetDetail.displayString() +"\n</p>";
-			}
 			msg += "<p>Thanks.\n</p>";
 			 
 			MimeBodyPart mimeBodyPart = new MimeBodyPart();
@@ -91,7 +90,15 @@ public class AssetNotificationJob implements Job{
 			Multipart multipart = new MimeMultipart();
 			multipart.addBodyPart(mimeBodyPart);
 			 
-			message.setContent(multipart);
+			String exportContent = CSVUtils.write(filteredList);
+
+			mimeBodyPart = new MimeBodyPart();
+			mimeBodyPart.setDataHandler(new DataHandler(new ByteArrayDataSource(exportContent.getBytes(),"text/csv")));
+			mimeBodyPart.setFileName("export.csv");
+
+		    multipart.addBodyPart(mimeBodyPart);
+
+		    message.setContent(multipart);
 			 
 			Transport.send(message);			
 			
