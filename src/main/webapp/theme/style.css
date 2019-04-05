@@ -19,6 +19,8 @@ table#res-data-table .form-check-input { margin-top: .4rem; margin-left: -1rem; 
 table#res-data-table.table-bordered thead td, .table-bordered thead th {border-bottom-width: 1px;}
 table#res-data-table thead th { font-size: 0.85rem; font-weight: 600; vertical-align: middle;}
 div.data-table-section ul.pagination { margin-bottom: 0; }
+div.data-table-section .btn {border-color: #ddd; background-color: #ddd; color: #000;}
+    
 
 table.dataTable.dtr-column>tbody>tr>td.control:before, table.dataTable.dtr-column>tbody>tr>th.control:before { line-height: 18px !important; }
 table.dataTable thead th, table.dataTable thead td, table.dataTable.no-footer { border-bottom: 1px solid #dee2e6 !important; }

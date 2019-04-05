@@ -5,6 +5,8 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.apache.commons.text.StringEscapeUtils;
+
 import com.pfg.asset.dto.AssetInfo;
 
 public class CSVUtils {
@@ -45,27 +47,27 @@ public class CSVUtils {
             sb.append(NEWLINE_SEPARATOR);
             
             for (AssetInfo assetInfo: assetList) {
-            	sb.append(assetInfo.getTrackName()).append(DEFAULT_SEPARATOR);
-            	sb.append(assetInfo.getOpcoName()).append(DEFAULT_SEPARATOR);
-            	sb.append(assetInfo.getDeviceName()).append(DEFAULT_SEPARATOR);
-            	sb.append(assetInfo.getOemName()).append(DEFAULT_SEPARATOR);
-            	sb.append(assetInfo.getProductNumber()).append(DEFAULT_SEPARATOR);
-            	sb.append(assetInfo.getProductDescription()).append(DEFAULT_SEPARATOR);
+            	sb.append(StringEscapeUtils.escapeCsv(assetInfo.getTrackName())).append(DEFAULT_SEPARATOR);
+            	sb.append(StringEscapeUtils.escapeCsv(assetInfo.getOpcoName())).append(DEFAULT_SEPARATOR);
+            	sb.append(StringEscapeUtils.escapeCsv(assetInfo.getDeviceName())).append(DEFAULT_SEPARATOR);
+            	sb.append(StringEscapeUtils.escapeCsv(assetInfo.getOemName())).append(DEFAULT_SEPARATOR);
+            	sb.append(StringEscapeUtils.escapeCsv(assetInfo.getProductNumber())).append(DEFAULT_SEPARATOR);
+            	sb.append(StringEscapeUtils.escapeCsv(assetInfo.getProductDescription())).append(DEFAULT_SEPARATOR);
             	sb.append(assetInfo.getQuantity()).append(DEFAULT_SEPARATOR);
-            	sb.append(assetInfo.getContractNumber()).append(DEFAULT_SEPARATOR);
-            	sb.append(assetInfo.getServiceLevel()).append(DEFAULT_SEPARATOR);
-            	sb.append(assetInfo.getSerialNumber()).append(DEFAULT_SEPARATOR);
-            	sb.append(assetInfo.getServiceLevelDescription()).append(DEFAULT_SEPARATOR);
-            	sb.append(assetInfo.getSku()).append(DEFAULT_SEPARATOR);
-            	sb.append(assetInfo.getStartDate()).append(DEFAULT_SEPARATOR);
-            	sb.append(assetInfo.getEndDate()).append(DEFAULT_SEPARATOR);
-            	sb.append(assetInfo.getDeployedLocation()).append(DEFAULT_SEPARATOR);
-            	sb.append(assetInfo.getDeployedAddress1()).append(DEFAULT_SEPARATOR);
-            	sb.append(assetInfo.getDeployedAddress2()).append(DEFAULT_SEPARATOR);
-            	sb.append(assetInfo.getDeployedCity()).append(DEFAULT_SEPARATOR);
-            	sb.append(assetInfo.getDeployedState()).append(DEFAULT_SEPARATOR);
-            	sb.append(assetInfo.getDeployedZipCode()).append(DEFAULT_SEPARATOR);
-            	sb.append(assetInfo.getDeployedCountry());
+            	sb.append(StringEscapeUtils.escapeCsv(assetInfo.getContractNumber())).append(DEFAULT_SEPARATOR);
+            	sb.append(StringEscapeUtils.escapeCsv(assetInfo.getServiceLevel())).append(DEFAULT_SEPARATOR);
+            	sb.append(StringEscapeUtils.escapeCsv(assetInfo.getSerialNumber())).append(DEFAULT_SEPARATOR);
+            	sb.append(StringEscapeUtils.escapeCsv(assetInfo.getServiceLevelDescription())).append(DEFAULT_SEPARATOR);
+            	sb.append(StringEscapeUtils.escapeCsv(assetInfo.getSku())).append(DEFAULT_SEPARATOR);
+            	sb.append(StringEscapeUtils.escapeCsv(assetInfo.getStartDate())).append(DEFAULT_SEPARATOR);
+            	sb.append(StringEscapeUtils.escapeCsv(assetInfo.getEndDate())).append(DEFAULT_SEPARATOR);
+            	sb.append(StringEscapeUtils.escapeCsv(assetInfo.getDeployedLocation())).append(DEFAULT_SEPARATOR);
+            	sb.append(StringEscapeUtils.escapeCsv(assetInfo.getDeployedAddress1())).append(DEFAULT_SEPARATOR);
+            	sb.append(StringEscapeUtils.escapeCsv(assetInfo.getDeployedAddress2())).append(DEFAULT_SEPARATOR);
+            	sb.append(StringEscapeUtils.escapeCsv(assetInfo.getDeployedCity())).append(DEFAULT_SEPARATOR);
+            	sb.append(StringEscapeUtils.escapeCsv(assetInfo.getDeployedState())).append(DEFAULT_SEPARATOR);
+            	sb.append(StringEscapeUtils.escapeCsv(assetInfo.getDeployedZipCode())).append(DEFAULT_SEPARATOR);
+            	sb.append(StringEscapeUtils.escapeCsv(assetInfo.getDeployedCountry()));
                 sb.append(NEWLINE_SEPARATOR);
             }
         } catch (Exception e) {

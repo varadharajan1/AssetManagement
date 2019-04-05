@@ -8,7 +8,6 @@ import java.util.logging.Logger;
 import javax.activation.DataHandler;
 import javax.mail.Message;
 import javax.mail.Multipart;
-import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;

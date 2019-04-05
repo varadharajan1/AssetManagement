@@ -157,10 +157,10 @@
 							<label class="control-label col-md-2" for="smtpPort"><fmt:message key="label.asset.import.tablename" bundle="${resourceBundle}"/></label>
 							<select class="form-control form-control-sm col-md-3" id="tableName" name="tableName">
 	                            <c:forEach items="${tableNameList}" var="tableName">
-									<option value="${tableName}"><c:out value="${tableName}" /></option>
+									<option value="${tableName}"><c:out value="${tableName}"/></option>
 								</c:forEach>
 	                        </select>
-	                        <a class="help align-items-center d-flex" data-toggle="popover" data-content="Help content!">&nbsp;<i class="fa fa-question-circle"></i>&nbsp;</a>
+	                        <a class="help align-items-center d-flex" data-toggle="popover" data-content="Select the table, where the file going to be imported.">&nbsp;<i class="fa fa-question-circle"></i>&nbsp;</a>
 	                   </div>
 					</div>
 				</div>

@@ -14,15 +14,6 @@ import com.pfg.asset.dto.FilterParam;
 public class AssetService {
 
 	@POST
-	@Path("/summary")
-	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	public AssetResponse filteredAsset(FilterParam filter) {
-		AssetServiceImpl serviceImpl = new AssetServiceImpl();
-		return serviceImpl.filteredAsset(filter);
-	}
-
-	@POST
 	@Path("/type")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -37,14 +28,5 @@ public class AssetService {
 	public AssetResponse getSerialNumbers() {
 		AssetServiceImpl serviceImpl = new AssetServiceImpl();
 		return serviceImpl.getSerialNumbers();
-	}
-
-	@POST
-	@Path("/pagination")
-	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	public AssetResponse getPaginationDetail(FilterParam filter) {
-		AssetServiceImpl serviceImpl = new AssetServiceImpl();
-		return serviceImpl.getPaginationDetail(filter);
 	}
 }

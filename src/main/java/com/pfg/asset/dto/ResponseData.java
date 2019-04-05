@@ -15,11 +15,8 @@ public class ResponseData implements Serializable{
 
 	private List<String> customerNameList;
 	private List<String> customerAddress;
-	private CustomerInfo customerInfo;
 
 	private Pagination pagination;
-
-	private List<AssetDetail> assetDetailList;
 
 	public List<String> getProductNameList() {
 		return productNameList;
@@ -50,18 +47,6 @@ public class ResponseData implements Serializable{
 	}
 	public void setCustomerAddress(List<String> customerAddress) {
 		this.customerAddress = customerAddress;
-	}
-	public CustomerInfo getCustomerInfo() {
-		return customerInfo;
-	}
-	public void setCustomerInfo(CustomerInfo customerInfo) {
-		this.customerInfo = customerInfo;
-	}
-	public List<AssetDetail> getAssetDetailList() {
-		return assetDetailList;
-	}
-	public void setAssetDetailList(List<AssetDetail> assetDetailList) {
-		this.assetDetailList = assetDetailList;
 	}
 	public List<String> getFilteredColumnList() {
 		return filteredColumnList;

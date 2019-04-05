@@ -29,7 +29,7 @@
 
 	<script>
 	$(function () {
-		var colors = ['#00C0F1','#00A757','#F69D01','#F8684E',"#8e5ea2","#3cba9f","#e8c3b9"];
+		var colors = ['#00C0F1','#00A757','#F69D01','#F8684E',"#8E5EA2","#3CBA9f","#E8C3B9","#5BB95B", "#347AB8", "#EFAD4D", "#D9544F","#F27B53", "#959801", "#FFB400", "#74B648"];
 		var colors1 = ["#F27B53", "#959801", "#FFB400", "#74B648"];
 		var colors2 = ["#5BB95B", "#347AB8", "#EFAD4D", "#D9544F"];
 		var labels = Array();
@@ -370,14 +370,14 @@
 							</div>
 							<div class="card card-second card-spacing">
 								<div class="card-body align-items-center d-flex">
-									<div class="float-left"><i class="fa fa-4x fa-users" aria-hidden="true"></i></div>
+									<div class="float-left"><i class="fa fa-4x fa-tags" aria-hidden="true"></i></div>
 									<div class="pl-3"><span class="box-text-size">${totalNoOfTracks} Tracks</span></div>
 								</div>
 								<div class="card-footer"><a href="/asset/detail">view detail</a></div>
 							</div>
 							<div class="card card-third card-spacing">
 								<div class="card-body align-items-center d-flex">
-									<div class="float-left"><i class="fa fa-4x fa-product-hunt" aria-hidden="true"></i></div>
+									<div class="float-left"><i class="fa fa-4x fa fa-building" aria-hidden="true"></i></div>
 									<div class="pl-3"><span class="box-text-size">${totalNoOfOpcos} OPCOs</span></div>
 								</div>
 								<div class="card-footer"><a href="/asset/detail">view detail</a></div>
