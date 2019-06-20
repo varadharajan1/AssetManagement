@@ -385,7 +385,7 @@
 							<div class="card card-fourth card-spacing">
 								<div class="card-body align-items-center d-flex">
 									<div class="float-left"><i class="fa fa-4x fa-cog" aria-hidden="true"></i></div>
-									<div class="pl-3"><span class="box-text-size">${totalNoOfOEM} OEMs</span></div>
+									<div class="pl-3"><span class="box-text-size">${totalNoOfBusiness} Business Segments</span></div>
 								</div>
 								<div class="card-footer"><a href="/asset/detail">view detail</a></div>
 							</div>

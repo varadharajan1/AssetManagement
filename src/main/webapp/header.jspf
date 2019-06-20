@@ -17,20 +17,6 @@
 				<li class="nav-item ${(pageContext.request.requestURI eq '/asset/asset-entry.jsp') || (pageContext.request.requestURI eq '/asset/asset-info.jsp') ? 'active': ''}">
 				  <a class="nav-link" href="/asset/entry">Asset Info</a>
 				</li>
-				<%-- 
-				<li class="nav-item ${pageContext.request.requestURI eq '/asset/product.jsp' ? 'active': ''}">
-				  <a class="nav-link" href="/asset/product">Product Info</a>
-				</li>
-				<li class="nav-item ${pageContext.request.requestURI eq '/asset/track.jsp' ? 'active': ''}">
-				  <a class="nav-link" href="/asset/track">Track Info</a>
-				</li>
-				<li class="nav-item ${pageContext.request.requestURI eq '/asset/oem.jsp' ? 'active': ''}">
-				  <a class="nav-link" href="/asset/oem">OEM Info</a>
-				</li>
-				<li class="nav-item ${pageContext.request.requestURI eq '/asset/deployment.jsp' ? 'active': ''}">
-				  <a class="nav-link" href="/asset/deployment">Deployment Info</a>
-				</li>
-				--%>
 				<li class="nav-item ${pageContext.request.requestURI eq '/asset/settings.jsp' ? 'active': ''}">
 				  <a class="nav-link" href="/asset/settings">Settings</a>
 				</li>

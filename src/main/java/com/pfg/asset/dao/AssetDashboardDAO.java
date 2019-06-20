@@ -20,30 +20,33 @@ public class AssetDashboardDAO {
 	private String selectCount = "SELECT count(*) FROM AssetInfo";
 	
 	private String distinctDeployedLocationCount = "SELECT count(DISTINCT DeployedLocation) FROM AssetInfo";
-	private String distinctDeployedAddressCount = "SELECT count(DISTINCT DeployedAddress1) FROM AssetInfo";
+	private String distinctDeployedAddressCount = "SELECT count(DISTINCT Address1) FROM AssetInfo";
 	private String distinctProductNumberCount = "SELECT count(DISTINCT ProductNumber) FROM AssetInfo";
 	private String distinctTrackNameCount = "SELECT count(DISTINCT TrackName) FROM AssetInfo";
 	private String distinctOpcoNameCount = "SELECT count(DISTINCT OpcoName) FROM AssetInfo";
 	private String distinctDeviceNameCount = "SELECT count(DISTINCT DeviceName) FROM AssetInfo";
 	private String distinctOEMNameCount = "SELECT count(DISTINCT OEMName) FROM AssetInfo";
+	private String distinctBusinessSegmentCount = "SELECT count(DISTINCT BusinessSegment) FROM AssetInfo";
 	private String distinctSerialNumberCount   = "SELECT count(DISTINCT SerialNumber) FROM AssetInfo";
 	
 	private String distinctTrackName   = "SELECT DISTINCT TrackName FROM AssetInfo ORDER BY TrackName";
+	private String distinctBusinessSegment = "SELECT DISTINCT BusinessSegment FROM AssetInfo ORDER BY BusinessSegment";
 	private String distinctOpcoName = "SELECT DISTINCT OpcoName FROM AssetInfo ORDER BY OpcoName";
 	private String distinctDeviceName = "SELECT DISTINCT DeviceName FROM AssetInfo ORDER BY DeviceName";
 	private String distinctOEMName   = "SELECT DISTINCT OEMName FROM AssetInfo ORDER BY OEMName";
 	private String distinctProductNumber   = "SELECT DISTINCT ProductNumber FROM AssetInfo ORDER BY ProductNumber";
 	private String distinctDeployedLocation   = "SELECT DISTINCT DeployedLocation FROM AssetInfo ORDER BY DeployedLocation";
-	private String distinctDeployedAddress   = "SELECT DISTINCT DeployedAddress1 FROM AssetInfo ORDER BY DeployedAddress1";
+	private String distinctDeployedAddress   = "SELECT DISTINCT Address1 FROM AssetInfo ORDER BY Address1";
 	private String distinctSerialNumber   = "SELECT DISTINCT SerialNumber FROM AssetInfo ORDER BY SerialNumber";
 
 	private String filterTrackName   = "SELECT DISTINCT TrackName FROM AssetInfo WHERE TrackName LIKE ? ORDER BY TrackName";
+	private String filterBusinessSegment   = "SELECT DISTINCT BusinessSegment FROM AssetInfo WHERE BusinessSegment LIKE ? ORDER BY BusinessSegment";
 	private String filterOpcoName   = "SELECT DISTINCT OpcoName FROM AssetInfo WHERE OpcoName LIKE ? ORDER BY OpcoName";
 	private String filterDeviceName   = "SELECT DISTINCT DeviceName FROM AssetInfo WHERE DeviceName LIKE ? ORDER BY DeviceName";
 	private String filterOEMName   = "SELECT DISTINCT OEMName FROM AssetInfo WHERE OEMName LIKE ? ORDER BY OEMName";
 	private String filterProductNumber   = "SELECT DISTINCT ProductNumber FROM AssetInfo WHERE ProductNumber LIKE ? ORDER BY ProductNumber";
 	private String filterDeployedLocation   = "SELECT DISTINCT DeployedLocation FROM AssetInfo WHERE DeployedLocation LIKE ? ORDER BY DeployedLocation";
-	private String filterDeployedAddress   = "SELECT DISTINCT DeployedAddress1 FROM AssetInfo WHERE DeployedAddress1 LIKE ? ORDER BY DeployedAddress1";
+	private String filterDeployedAddress   = "SELECT DISTINCT Address1 FROM AssetInfo WHERE DeployedAddress1 LIKE ? ORDER BY Address1";
 	private String filterSerialNumber   = "SELECT DISTINCT SerialNumber FROM AssetInfo WHERE SerialNumber LIKE ? ORDER BY SerialNumber";
 
 	private String filterByOEMNameCount = "SELECT OEMName, count(*) FROM AssetInfo GROUP BY OEMName ORDER BY OEMName";
@@ -67,6 +70,8 @@ public class AssetDashboardDAO {
 				ps = conn.prepareStatement(distinctTrackNameCount);
 			} else if ("OPCO".equals(column)) {
 				ps = conn.prepareStatement(distinctOpcoNameCount);
+			} else if ("BUSINESS".equals(column)) {
+				ps = conn.prepareStatement(distinctBusinessSegmentCount);
 			} else if ("DEVICE".equals(column)) {
 				ps = conn.prepareStatement(distinctDeviceNameCount);
 			} else if ("OEM".equals(column)) {
@@ -115,6 +120,8 @@ public class AssetDashboardDAO {
 				ps = conn.prepareStatement(distinctTrackName);
 			} else if ("OPCO".equals(column)) {
 				ps = conn.prepareStatement(distinctOpcoName);
+			} else if ("BUSINESS".equals(column)) {
+				ps = conn.prepareStatement(distinctBusinessSegment);
 			} else if ("DEVICE".equals(column)) {
 				ps = conn.prepareStatement(distinctDeviceName);
 			} else if ("OEM".equals(column)) {
@@ -165,6 +172,8 @@ public class AssetDashboardDAO {
 				ps = conn.prepareStatement(filterOpcoName);
 			} else if ("DEVICE".equals(filterType)) {
 				ps = conn.prepareStatement(filterDeviceName);
+			} else if ("BUSINESS".equals(filterType)) {
+				ps = conn.prepareStatement(filterBusinessSegment);
 			} else if ("OEM".equals(filterType)) {
 				ps = conn.prepareStatement(filterOEMName);
 			} else if ("SERIAL".equals(filterType)) {

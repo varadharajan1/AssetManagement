@@ -51,12 +51,14 @@
 		            { "visible":true, "orderable": false, defaultContent: '', className: "control" },
 		            { "visible":true, "orderable": false, defaultContent: '', className: "select-checkbox" },
 		            { "data": "trackName", "visible":true, "orderable": false },
+		            { "data": "businessSegment", "visible":true, "orderable": false },
 		            { "data": "oemName", "visible":true, "orderable": false },
 		            { "data": "opcoName", "visible":true, "orderable": false, defaultContent: '' },
 		            { "data": "deviceName", "visible":true, "orderable": false, defaultContent: '' },
 		            { "data": "serialNumber", "visible":true, "orderable": false, defaultContent: '' },
-		            { "data": "startDate", "visible":true, "orderable": false, defaultContent: '' },
-		            { "data": "endDate", "visible":true, "orderable": true },
+		            { "data": "supportStartDate", "visible":true, "orderable": false, defaultContent: '' },
+		            { "data": "supportEndDate", "visible":true, "orderable": true },
+		            { "data": "contractedThrough", "visible":true, "orderable": false, defaultContent: '' },
 		            { "data": "serviceLevel", "visible":true, "orderable": false, defaultContent: '' },
 		            { "data": "productNumber", "visible":true, "orderable": false, defaultContent: ''  },
 		            { "data": "productDescription", "visible":true, "orderable": false, defaultContent: ''  },
@@ -64,19 +66,24 @@
 		            { "data": "contractNumber", "visible":true, "orderable": false, defaultContent: ''  },
 		            { "data": "serviceLevelDescription", "visible":true, "orderable": false, defaultContent: '' },
 		            { "data": "sku", "visible":true, "orderable": false, defaultContent: ''  },
+		            { "data": "eolDate", "visible":true, "orderable": false, defaultContent: '' },
+		            { "data": "purchasedDate", "visible":true, "orderable": false, defaultContent: '' },
+		            { "data": "purchasedVendor", "visible":true, "orderable": false, defaultContent: '' },
+		            { "data": "installedDate", "visible":true, "orderable": false, defaultContent: '' },
+		            { "data": "purchasedCost", "visible":true, "orderable": false, defaultContent: '' },
 		            { "data": "deployedLocation", "visible":true, "orderable": false, defaultContent: ''  },
-		            { "data": "deployedAddress1", "visible":true, "orderable": false, defaultContent: ''  },
-		            { "data": "deployedAddress2", "visible":true, "orderable": false, defaultContent: '' },
-		            { "data": "deployedCity", "visible":true, "orderable": false, defaultContent: ''  },
-		            { "data": "deployedState", "visible":true, "orderable": false, defaultContent: ''  },
-		            { "data": "deployedZipCode", "visible":true, "orderable": false, defaultContent: ''  },
-		            { "data": "deployedCountry", "visible":true, "orderable": false, defaultContent: ''  }
+		            { "data": "address1", "visible":true, "orderable": false, defaultContent: ''  },
+		            { "data": "address2", "visible":true, "orderable": false, defaultContent: '' },
+		            { "data": "city", "visible":true, "orderable": false, defaultContent: ''  },
+		            { "data": "state", "visible":true, "orderable": false, defaultContent: ''  },
+		            { "data": "zipCode", "visible":true, "orderable": false, defaultContent: ''  },
+		            { "data": "country", "visible":true, "orderable": false, defaultContent: ''  }
 		        ],
 		        select: { style: 'multi', selector: 'td.select-checkbox' },
-		        "order": [[8, 'asc']],
+		        "order": [[9, 'asc']],
 		    });
 
-			var updateFlag = false;
+			var updateFlag = true;
 			var multipleValue = "Multiple Rows Selected";
 			var rowSelected = new Array();
 			$("#update").click(function() {
@@ -85,45 +92,17 @@
 				$.each(data, function( key, value ) {
 					rowSelected.push(JSON.stringify(value));
 				});
-				if(rowSelected.length == 1){
-					var asset = data[0];
-                    $("#editTrackName").val(asset.trackName);
-					$("#editOpcoName").val(asset.opcoName);
-					$("#editDeviceName").val(asset.deviceName);
-					$("#editOemName").val(asset.oemName);
-					$("#editSerialNumber").val(asset.serialNumber);
-					$("#editServiceLevel").val(asset.serviceLevel);
-					$("#editDatepicker1").datepicker({ format: 'yyyy-mm-dd', todayHighlight: true, autoclose: true });
-					$("#editDatepicker1").datepicker({ format: 'yyyy-mm-dd', todayHighlight: true, autoclose: true });
-					$("#editStartDate").datepicker({ format: 'yyyy-mm-dd', todayHighlight: true, autoclose: true });
-					$("#editEndDate").datepicker({ format: 'yyyy-mm-dd', todayHighlight: true, autoclose: true });
-					$('#editStartDate').datepicker("setDate", asset.startDate);
-					$('#editEndDate').datepicker("setDate", asset.endDate);
-					updateFlag = true;
-				}else if(rowSelected.length > 1){
-                    $("#editTrackName").val(multipleValue);
-					$("#editOpcoName").val(multipleValue);
-					$("#editDeviceName").val(multipleValue);
-					$("#editOemName").val(multipleValue);
-					$("#editSerialNumber").val(multipleValue);
-					$("#editServiceLevel").val(multipleValue);
-					$("#editDatepicker1").datepicker({ format: 'yyyy-mm-dd', startDate: "today", todayHighlight: true, autoclose: true });
-					$("#editDatepicker2").datepicker({ format: 'yyyy-mm-dd', startDate: "today", todayHighlight: true, autoclose: true });
-					$("#editStartDate").datepicker({ format: 'yyyy-mm-dd', startDate: "today", todayHighlight: true, autoclose: true });
-					$("#editEndDate").datepicker({ format: 'yyyy-mm-dd', startDate: "today", todayHighlight: true, autoclose: true });
-					updateFlag = true;
-				}else if(rowSelected.length <= 0){
+				if(rowSelected.length <= 0){
 		    		updateFlag = false;
 		    	}
 				if(updateFlag == true){
-					$('#editModalInputs').modal('show');
+					$("#filter_form").attr("action", "/asset/entry");
+					$("#action").val("");
+					$("#rowSelected").val(rowSelected);
+					$("#filter_form").submit();
 				}
 			});
-			$("#save-asset").click(function() {
-				$("#action").val("update");
-				$("#rowSelected").val(rowSelected);
-				$("#filter_form").submit();
-			});
+			
 		});
 	</script>
 
@@ -140,6 +119,10 @@
 				$("#filterValue").addClass("d-none");
 				$("#expirationDate").addClass("d-none");
 				$("select#filterType").val("RENEWAL");
+				$("select#renewal").prop('selectedIndex', 0);
+				$("#filterValue").val("");
+				$("#fromDate").val("");
+				$("#toDate").val("");
 				$("#filter_form").reset();
 			});
 			
@@ -334,6 +317,9 @@
 				    	<label for="filterType"><fmt:message key="label.asset.filter.filterby" bundle="${resourceBundle}"/></label>
 						<select class="form-control form-control-sm" id="filterType" name="filterType">
 							<option value='<fmt:message key="label.asset.filter.renewal" bundle="${resourceBundle}"/>'><fmt:message key="label.asset.filter.renewal.value" bundle="${resourceBundle}"/></option>
+							<option value='<fmt:message key="label.asset.filter.track" bundle="${resourceBundle}"/>'><fmt:message key="label.asset.filter.track.value" bundle="${resourceBundle}"/></option>
+							<option value='<fmt:message key="label.asset.filter.business" bundle="${resourceBundle}"/>'><fmt:message key="label.asset.filter.business.value" bundle="${resourceBundle}"/></option>
+							<option value='<fmt:message key="label.asset.filter.opco" bundle="${resourceBundle}"/>'><fmt:message key="label.asset.filter.opco.value" bundle="${resourceBundle}"/></option>
 							<option value='<fmt:message key="label.asset.filter.oem" bundle="${resourceBundle}"/>'><fmt:message key="label.asset.filter.oem.value" bundle="${resourceBundle}"/></option>
 							<option value='<fmt:message key="label.asset.filter.product" bundle="${resourceBundle}"/>'><fmt:message key="label.asset.filter.product.value" bundle="${resourceBundle}"/></option>
 							<option value='<fmt:message key="label.asset.filter.serial" bundle="${resourceBundle}"/>'><fmt:message key="label.asset.filter.serial.value" bundle="${resourceBundle}"/></option>
@@ -394,19 +380,26 @@
 		                    <th>&nbsp;</th>
 		                    <th>&nbsp;</th>
 		                    <th><fmt:message key="label.asset.detail.trackName" bundle="${resourceBundle}"/></th>
+		                    <th><fmt:message key="label.asset.detail.businessSegment" bundle="${resourceBundle}"/></th>
 		                    <th><fmt:message key="label.asset.detail.oemName" bundle="${resourceBundle}"/></th>
 		                    <th><fmt:message key="label.asset.detail.opcoName" bundle="${resourceBundle}"/></th>
 		                    <th><fmt:message key="label.asset.detail.deviceName" bundle="${resourceBundle}"/></th>
 		                    <th><fmt:message key="label.asset.detail.serialNumber" bundle="${resourceBundle}"/></th>
 		                    <th><fmt:message key="label.asset.detail.startDate" bundle="${resourceBundle}"/></th>
 		                    <th><fmt:message key="label.asset.detail.endDate" bundle="${resourceBundle}"/></th>
+		                    <th><fmt:message key="label.asset.detail.contractedThrough" bundle="${resourceBundle}"/></th>
 		                    <th><fmt:message key="label.asset.detail.serviceLevel" bundle="${resourceBundle}"/></th>
 		                    <th><fmt:message key="label.asset.detail.productNumber" bundle="${resourceBundle}"/></th>
-		                    <th><fmt:message key="label.asset.detail.productDescription" bundle="${resourceBundle}"/></th>
+		                    <th><fmt:message key="label.asset.detail.description" bundle="${resourceBundle}"/></th>
 		                    <th><fmt:message key="label.asset.detail.quantity" bundle="${resourceBundle}"/></th>
 		                    <th><fmt:message key="label.asset.detail.contractNumber" bundle="${resourceBundle}"/></th>
 		                    <th><fmt:message key="label.asset.detail.serviceLevelDescription" bundle="${resourceBundle}"/></th>
 		                    <th><fmt:message key="label.asset.detail.sku" bundle="${resourceBundle}"/></th>
+		                    <th><fmt:message key="label.asset.detail.eolDate" bundle="${resourceBundle}"/></th>
+		                    <th><fmt:message key="label.asset.detail.purchasedDate" bundle="${resourceBundle}"/></th>
+		                    <th><fmt:message key="label.asset.detail.purchasedVendor" bundle="${resourceBundle}"/></th>
+		                    <th><fmt:message key="label.asset.detail.installedDate" bundle="${resourceBundle}"/></th>
+		                    <th><fmt:message key="label.asset.detail.purchasedCost" bundle="${resourceBundle}"/></th>
 		                    <th><fmt:message key="label.asset.detail.deployedLocation" bundle="${resourceBundle}"/></th>
 		                    <th><fmt:message key="label.asset.detail.deployedAddress1" bundle="${resourceBundle}"/></th>
 		                    <th><fmt:message key="label.asset.detail.deployedAddress2" bundle="${resourceBundle}"/></th>
@@ -452,100 +445,6 @@
 		        </div>
 	        </div>
 
-			<!-- Modal starts-->
-			<div class="modal fade" id="editModalInputs" tabindex="-1" role="dialog" aria-hidden="true">
-			  <div class="modal-dialog modal-dialog-centered modal" role="document">
-			    <div class="modal-content">
-			      <div class="modal-header">
-			        <h5 class="modal-title" id="editAssetModalTitle"><fmt:message key="modal.title.asset.detail" bundle="${resourceBundle}"/></h5>
-			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-			          <span aria-hidden="true">&times;</span>
-			        </button>
-			      </div>
-			      <div class="modal-body">
-					<div class="row">
-					    <div class="col-md-12 col-12">
-			                <div class="row p-sm-2">
-			                    <div class="col-sm-4 text-right">
-			                        <strong><fmt:message key="label.asset.detail.trackName" bundle="${resourceBundle}"/></strong>
-			                    </div>
-			                    <div class="col-sm-8">
-									<input type="text" class="form-control form-control-sm" id="editTrackName" name="editTrackName" readonly="readonly">		                    
-			                    </div>
-			                </div>
-			                <div class="row p-sm-2">
-			                    <div class="col-sm-4 text-right">
-			                        <strong><fmt:message key="label.asset.detail.oemName" bundle="${resourceBundle}"/></strong>
-			                    </div>
-			                    <div class="col-sm-8">
-									<input type="text" class="form-control form-control-sm" id="editOemName" name="editOemName" readonly="readonly">		                    
-			                    </div>
-			                </div>
-			                <div class="row p-sm-2">
-			                    <div class="col-sm-4 text-right">
-			                        <strong><fmt:message key="label.asset.detail.opcoName" bundle="${resourceBundle}"/></strong>
-			                    </div>
-			                    <div class="col-sm-8">
-									<input type="text" class="form-control form-control-sm" id="editOpcoName" name="editOpcoName" readonly="readonly">		                    
-			                    </div>
-			                </div>
-			                <div class="row p-sm-2">
-			                    <div class="col-sm-4 text-right">
-			                        <strong><fmt:message key="label.asset.detail.deviceName" bundle="${resourceBundle}"/></strong>
-			                    </div>
-			                    <div class="col-sm-8">
-									<input type="text" class="form-control form-control-sm" id="editDeviceName" name="editDeviceName" readonly="readonly">		                    
-			                    </div>
-			                </div>
-			                <div class="row p-sm-2">
-			                    <div class="col-sm-4 text-right">
-			                        <strong><fmt:message key="label.asset.detail.serialNumber" bundle="${resourceBundle}"/></strong>
-			                    </div>
-			                    <div class="col-sm-8">
-									<input type="text" class="form-control form-control-sm" id="editSerialNumber" name="editSerialNumber" readonly="readonly">
-			                    </div>
-			                </div>
-			                <div class="row p-sm-2">
-			                    <div class="col-sm-4 text-right">
-			                        <strong><fmt:message key="label.asset.detail.serviceLevel" bundle="${resourceBundle}"/></strong>
-			                    </div>
-			                    <div class="col-sm-8">
-									<input type="text" class="form-control form-control-sm" id="editServiceLevel" name="editServiceLevel" readonly="readonly">
-			                    </div>
-			                </div>
-			                <div class="row p-sm-2">
-			                    <div class="col-sm-4 text-right">
-			                        <strong><fmt:message key="label.asset.detail.startDate" bundle="${resourceBundle}"/></strong>
-			                    </div>
-			                    <div class="col-sm-5">
-		                            <div class="input-group date" id="editDatepicker1">
-										<input type="text" class="form-control form-control-sm" id="editStartDate" name="editStartDate" autocomplete="off"/>
-		                                <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
-		                            </div>
-			                    </div>
-			                </div>
-			                <div class="row p-sm-2">
-			                    <div class="col-sm-4 text-right">
-			                        <strong><fmt:message key="label.asset.detail.endDate" bundle="${resourceBundle}"/></strong>
-			                    </div>
-			                    <div class="col-sm-5">
-		                            <div class="input-group date" id="editDatepicker2">
-		                                <input type="text" class="form-control form-control-sm" id="editEndDate" name="editEndDate" autocomplete="off"/>
-		                                <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
-		                            </div>
-			                    </div>
-			                </div>
-					    </div>
-					</div>
-			      </div>
-			      <div class="modal-footer">
-			        <button type="button" class="btn btn-secondary" data-dismiss="modal"><fmt:message key="btn.asset.close" bundle="${resourceBundle}"/></button>
-			        <button id="save-asset" type="button" class="btn btn-primary"><fmt:message key="btn.asset.save" bundle="${resourceBundle}"/></button>
-			      </div>
-			    </div>
-			  </div>
-			</div>
-			<!-- Modal ends-->
         </form>
 	</main>
 	<footer class="footer">

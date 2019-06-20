@@ -37,7 +37,6 @@ public class AssetDetailController extends HttpServlet {
 		int visiblePages = AssetConstants.PAGINATION_COUNT;
 
 		try {
-			String action = request.getParameter("action");
 			String currentPage = request.getParameter("currentPage");
 			String recordsPerPage = request.getParameter("recordsPerPage");
 
@@ -49,30 +48,6 @@ public class AssetDetailController extends HttpServlet {
 			}
 
 			Gson gson = null;
-			if("update".equalsIgnoreCase(action)) {
-				String assetSelected= request.getParameter("rowSelected");
-				String editStartDate = request.getParameter("editStartDate");
-				String editEndDate = request.getParameter("editEndDate");
-				logger.log(Level.INFO, "assetSelected: {0}", assetSelected );
-				logger.log(Level.INFO, "editStartDate: {0}", editStartDate );
-				logger.log(Level.INFO, "editEndDate: {0}", editEndDate );
-				if(Validator.isNotEmpty(assetSelected)) {
-					if(Validator.isNotEmpty(editStartDate) && Validator.isNotEmpty(editEndDate)) {
-						gson = new Gson();
-				        Type type = new TypeToken<List<AssetInfo>>() {}.getType();
-				        List<AssetInfo> assetSelectedList = gson.fromJson(("["+assetSelected+"]"), type);
-						for(AssetInfo item : assetSelectedList) {
-							logger.log(Level.INFO, "assetSelectedList: {0}", item );
-						}
-						int rows = DAOFactory.getInstance().getAssetInfoDAO().batchUpdate(assetSelectedList, editStartDate, editEndDate);
-						message = rows + " row(s) updated.";
-				    	request.setAttribute(AssetConstants.MESSAGE_KEY, message);
-					} else {
-						message = AssetConstants.ERROR_INVALID_DATES;
-				    	request.setAttribute(AssetConstants.MESSAGE_KEY, message);
-					}
-				}
-			}
 			List<AssetInfo> assetInfoList = DAOFactory.getInstance().getAssetInfoDAO().selectAssetInfo(page, records);
 			gson = new Gson();
 	        Type type = new TypeToken<List<AssetInfo>>() {}.getType();

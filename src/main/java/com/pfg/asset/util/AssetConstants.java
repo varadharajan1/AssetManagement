@@ -11,6 +11,7 @@ public class AssetConstants {
 	public static final int DEFAULT_COUNT = 10;
 
 	public static final String MESSAGE_KEY = "message";
+	public static final String ROW_SELECTED = "rowSelected";
 
 	public static final String EMP_FORM = "empForm";
 	public static final String UPDATE_EMP_FORM = "UPDATE";
@@ -31,5 +32,5 @@ public class AssetConstants {
 	
 	public static final String CRON_EXPRESSION = "0 * * * * ?";
 	
-	public enum FILTER { RENEWAL, PRODUCT, LOCATION, ADDRESS, SERIAL, DATE, TRACK, OEM } 
+	public enum FILTER { RENEWAL, PRODUCT, LOCATION, ADDRESS, SERIAL, DATE, TRACK, OEM, OPCO, BUSINESS } 
 }

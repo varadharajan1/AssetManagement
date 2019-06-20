@@ -31,7 +31,7 @@ public class DashboardController extends HttpServlet {
 			int totalNoOfAssets = DAOFactory.getInstance().getAssetDashboardDAO().getNumberOfRows("ASSET");
 			int totalNoOfTracks = DAOFactory.getInstance().getAssetDashboardDAO().getNumberOfRows("TRACK");
 			int totalNoOfOpcos = DAOFactory.getInstance().getAssetDashboardDAO().getNumberOfRows("OPCO");
-			int totalNoOfOEM = DAOFactory.getInstance().getAssetDashboardDAO().getNumberOfRows("OEM");
+			int totalNoOfBusiness = DAOFactory.getInstance().getAssetDashboardDAO().getNumberOfRows("BUSINESS");
 
 			Map<String,Integer> renewalCounts = DAOFactory.getInstance().getAssetInfoDAO().getRenewalPeriodCount(AssetConstants.INTERVALS);
 
@@ -40,7 +40,7 @@ public class DashboardController extends HttpServlet {
 			request.setAttribute("totalNoOfAssets", totalNoOfAssets);
 			request.setAttribute("totalNoOfTracks", totalNoOfTracks);
 			request.setAttribute("totalNoOfOpcos", totalNoOfOpcos);
-			request.setAttribute("totalNoOfOEM", totalNoOfOEM);
+			request.setAttribute("totalNoOfBusiness", totalNoOfBusiness);
 			request.setAttribute("renewalCounts", renewalCounts);
 			request.setAttribute("oemNameCounts", oemNameCounts);
 			

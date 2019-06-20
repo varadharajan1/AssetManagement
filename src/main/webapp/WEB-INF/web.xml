@@ -66,7 +66,18 @@
 	  <servlet-name>SettingsController</servlet-name>
 	  <url-pattern>/settings</url-pattern>
 	</servlet-mapping>
-	<resource-ref>
+
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Secured</web-resource-name>
+            <url-pattern>/asset/*</url-pattern>
+        </web-resource-collection>
+        <user-data-constraint>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+
+    <resource-ref>
 	  <description>This is for SQL Server Database</description>
 	  <res-ref-name>jdbc/assetDS</res-ref-name>
 	  <res-type>javax.sql.DataSource</res-type>

@@ -120,15 +120,18 @@ public class Validator {
 		return retValue;
 	}
 
-	private static boolean validateAssetInputs(AssetInfo asset) {
+	public static boolean validateAssetInputs(AssetInfo asset) {
 		boolean result = false;
-	    if (Validator.isNotEmpty(asset.getTrackName()) && 
-	    		Validator.isNotEmpty(asset.getOemName()) && 
-	    		Validator.isNotEmpty(asset.getOpcoName()) && 
-	    		Validator.isNotEmpty(asset.getDeviceName()) && 
-	    		Validator.isNotEmpty(asset.getProductNumber()) && 
-	    		Validator.isNotEmpty(asset.getSerialNumber()) && 
-	    		Validator.isNotEmpty(asset.getEndDate()) 
+	    if (Validator.isNotEmpty(asset.getTrackName()) || 
+	    		Validator.isNotEmpty(asset.getBusinessSegment()) || 
+	    		Validator.isNotEmpty(asset.getOpcoName()) || 
+	    		Validator.isNotEmpty(asset.getDeviceName()) || 
+	    		Validator.isNotEmpty(asset.getOemName()) || 
+	    		Validator.isNotEmpty(asset.getProductNumber()) || 
+	    		Validator.isNotEmpty(asset.getSerialNumber()) || 
+	    		Validator.isNotEmpty(asset.getDeployedLocation()) || 
+	    		Validator.isNotEmpty(asset.getAddress1()) || 
+	    		Validator.isNotEmpty(asset.getSupportEndDate()) 
 	    	) {
 	    	result = true;
 	    }
