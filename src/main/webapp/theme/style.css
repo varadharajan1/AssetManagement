@@ -41,8 +41,8 @@ div.main-content .box-text-size	 { font-size:1.15rem;}
 div.main-content .card-body { padding:1rem; }
 div.main-content .card-spacing { min-height: 100px; margin-bottom: 10px;}
 
-.card-0, .card-1, .card-2, .card-3 { padding:0 !important;}
-.card-0 p, .card-1 p, .card-2 p, .card-3 p { margin-bottom:0 !important;}
+.card-exp, .card-0, .card-1, .card-2, .card-3 { padding:0 !important;}
+.card-exp p, .card-0 p, .card-1 p, .card-2 p, .card-3 p { margin-bottom:0 !important;}
 
 .absolute-center { position:absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);}
 .label-text {font-size: 0.85rem; font-weight: 600;}

@@ -43,6 +43,7 @@ public class AssetInfoDAO {
 	private String filterByLocationLimit = "SELECT TrackName, BusinessSegment, OPCOName, DeviceName, OEMName, ContractedThrough, ProductNumber, ProductDescription, Quantity, ContractNumber, ServiceLevel, SerialNumber, ServiceLevelDescription, SKU, SupportStartDate, SupportEndDate, EOLDate, PurchasedDate, PurchasedVendor, InstalledDate, PurchasedCost, DeployedLocation, Address1, Address2, City, State, ZipCode, Country, Created, LastUpdated, UpdatedBy FROM AssetInfo WHERE DeployedLocation=? ORDER BY SupportStartDate, SupportEndDate OFFSET ? LIMIT ?";
 	private String filterByAddressLimit = "SELECT TrackName, BusinessSegment, OPCOName, DeviceName, OEMName, ContractedThrough, ProductNumber, ProductDescription, Quantity, ContractNumber, ServiceLevel, SerialNumber, ServiceLevelDescription, SKU, SupportStartDate, SupportEndDate, EOLDate, PurchasedDate, PurchasedVendor, InstalledDate, PurchasedCost, DeployedLocation, Address1, Address2, City, State, ZipCode, Country, Created, LastUpdated, UpdatedBy FROM AssetInfo WHERE Address1=? ORDER BY SupportStartDate, SupportEndDate OFFSET ? LIMIT ?";
 	private String filterByExpiringDateLimit = "SELECT TrackName, BusinessSegment, OPCOName, DeviceName, OEMName, ContractedThrough, ProductNumber, ProductDescription, Quantity, ContractNumber, ServiceLevel, SerialNumber, ServiceLevelDescription, SKU, SupportStartDate, SupportEndDate, EOLDate, PurchasedDate, PurchasedVendor, InstalledDate, PurchasedCost, DeployedLocation, Address1, Address2, City, State, ZipCode, Country, Created, LastUpdated, UpdatedBy FROM AssetInfo WHERE SupportEndDate BETWEEN ? AND ? ORDER BY SupportStartDate, SupportEndDate OFFSET ? LIMIT ?";
+	private String filterByExpiredDateLimit = "SELECT TrackName, BusinessSegment, OPCOName, DeviceName, OEMName, ContractedThrough, ProductNumber, ProductDescription, Quantity, ContractNumber, ServiceLevel, SerialNumber, ServiceLevelDescription, SKU, SupportStartDate, SupportEndDate, EOLDate, PurchasedDate, PurchasedVendor, InstalledDate, PurchasedCost, DeployedLocation, Address1, Address2, City, State, ZipCode, Country, Created, LastUpdated, UpdatedBy FROM AssetInfo WHERE SupportEndDate < CURRENT_DATE ORDER BY SupportStartDate, SupportEndDate OFFSET ? LIMIT ?";
 
 	private String filterByRenewal = "SELECT TrackName, BusinessSegment, OPCOName, DeviceName, OEMName, ContractedThrough, ProductNumber, ProductDescription, Quantity, ContractNumber, ServiceLevel, SerialNumber, ServiceLevelDescription, SKU, SupportStartDate, SupportEndDate, EOLDate, PurchasedDate, PurchasedVendor, InstalledDate, PurchasedCost, DeployedLocation, Address1, Address2, City, State, ZipCode, Country, Created, LastUpdated, UpdatedBy FROM AssetInfo WHERE SupportEndDate <= (CURRENT_DATE + ?::interval) ORDER BY SupportStartDate, SupportEndDate";
 	private String filterByOEM = "SELECT TrackName, BusinessSegment, OPCOName, DeviceName, OEMName, ContractedThrough, ProductNumber, ProductDescription, Quantity, ContractNumber, ServiceLevel, SerialNumber, ServiceLevelDescription, SKU, SupportStartDate, SupportEndDate, EOLDate, PurchasedDate, PurchasedVendor, InstalledDate, PurchasedCost, DeployedLocation, Address1, Address2, City, State, ZipCode, Country, Created, LastUpdated, UpdatedBy FROM AssetInfo WHERE OEMName=? ORDER BY SupportStartDate, SupportEndDate";
@@ -54,6 +55,7 @@ public class AssetInfoDAO {
 	private String filterByLocation = "SELECT TrackName, BusinessSegment, OPCOName, DeviceName, OEMName, ContractedThrough, ProductNumber, ProductDescription, Quantity, ContractNumber, ServiceLevel, SerialNumber, ServiceLevelDescription, SKU, SupportStartDate, SupportEndDate, EOLDate, PurchasedDate, PurchasedVendor, InstalledDate, PurchasedCost, DeployedLocation, Address1, Address2, City, State, ZipCode, Country, Created, LastUpdated, UpdatedBy FROM AssetInfo WHERE DeployedLocation=? ORDER BY SupportStartDate, SupportEndDate";
 	private String filterByAddress = "SELECT TrackName, BusinessSegment, OPCOName, DeviceName, OEMName, ContractedThrough, ProductNumber, ProductDescription, Quantity, ContractNumber, ServiceLevel, SerialNumber, ServiceLevelDescription, SKU, SupportStartDate, SupportEndDate, EOLDate, PurchasedDate, PurchasedVendor, InstalledDate, PurchasedCost, DeployedLocation, Address1, Address2, City, State, ZipCode, Country, Created, LastUpdated, UpdatedBy FROM AssetInfo WHERE Address1=? ORDER BY SupportStartDate, SupportEndDate";
 	private String filterByExpiringDate = "SELECT TrackName, BusinessSegment, OPCOName, DeviceName, OEMName, ContractedThrough, ProductNumber, ProductDescription, Quantity, ContractNumber, ServiceLevel, SerialNumber, ServiceLevelDescription, SKU, SupportStartDate, SupportEndDate, EOLDate, PurchasedDate, PurchasedVendor, InstalledDate, PurchasedCost, DeployedLocation, Address1, Address2, City, State, ZipCode, Country, Created, LastUpdated, UpdatedBy FROM AssetInfo WHERE SupportEndDate BETWEEN ? AND ? ORDER BY SupportStartDate, SupportEndDate";
+	private String filterByExpiredDate = "SELECT TrackName, BusinessSegment, OPCOName, DeviceName, OEMName, ContractedThrough, ProductNumber, ProductDescription, Quantity, ContractNumber, ServiceLevel, SerialNumber, ServiceLevelDescription, SKU, SupportStartDate, SupportEndDate, EOLDate, PurchasedDate, PurchasedVendor, InstalledDate, PurchasedCost, DeployedLocation, Address1, Address2, City, State, ZipCode, Country, Created, LastUpdated, UpdatedBy FROM AssetInfo WHERE SupportEndDate < CURRENT_DATE ORDER BY SupportStartDate, SupportEndDate";
 
 	private String filterByRenewalCount = "SELECT count(*) FROM AssetInfo WHERE SupportEndDate <= (CURRENT_DATE + ?::interval)";
 	private String filterByOEMCount = "SELECT count(*) FROM AssetInfo WHERE OEMName=?";
@@ -65,6 +67,7 @@ public class AssetInfoDAO {
 	private String filterByLocationCount = "SELECT count(*) FROM AssetInfo WHERE DeployedLocation=?";
 	private String filterByAddressCount = "SELECT count(*) FROM AssetInfo WHERE Address1=?";
 	private String filterByExpiringDateCount = "SELECT count(*) FROM AssetInfo WHERE SupportEndDate BETWEEN ? AND ?";
+	private String filterByExpiredDateCount = "SELECT count(*) FROM AssetInfo WHERE SupportEndDate < CURRENT_DATE";
 
 	public int insertAssetInfo(AssetInfo assetInfo) {
 		logger.log(Level.INFO, "entered");
@@ -544,6 +547,8 @@ public class AssetInfoDAO {
 					query = pagination ? filterByBusinessSegmentLimit : filterByBusinessSegment;
 				} else if ("DATE".equals(filter.getFilterType())) {
 					query = pagination ? filterByExpiringDateLimit : filterByExpiringDate;
+				} else if ("EXPIRED".equals(filter.getFilterType())) {
+					query = pagination ? filterByExpiredDateLimit : filterByExpiredDate;
 				} else {
 					query = pagination ? filterByRenewalLimit : filterByRenewal;
 				}
@@ -556,12 +561,18 @@ public class AssetInfoDAO {
 						ps.setInt(3, offset);
 						ps.setInt(4, filter.getRecordsPerPage());
 					}
-				} else {
+				} else if (!"EXPIRED".equals(filter.getFilterType())){
 					ps.setString(1, filter.getFilterValue());
 					if(pagination) {
 						int offset = (filter.getCurrentPage() * filter.getRecordsPerPage()) - filter.getRecordsPerPage();
 						ps.setInt(2, offset);
 						ps.setInt(3, filter.getRecordsPerPage());
+					}
+				}else {
+					if(pagination) {
+						int offset = (filter.getCurrentPage() * filter.getRecordsPerPage()) - filter.getRecordsPerPage();
+						ps.setInt(1, offset);
+						ps.setInt(2, filter.getRecordsPerPage());
 					}
 				}
 				rs = ps.executeQuery();
@@ -617,6 +628,8 @@ public class AssetInfoDAO {
 					query = filterByBusinessSegmentCount;
 				} else if ("DATE".equals(filter.getFilterType())) {
 					query = filterByExpiringDateCount;
+				} else if ("EXPIRED".equals(filter.getFilterType())) {
+					query = filterByExpiredDateCount;
 				} else {
 					query = filterByRenewalCount;
 				}
@@ -624,7 +637,7 @@ public class AssetInfoDAO {
 				if ("DATE".equals(filter.getFilterType())) {
 					ps.setObject(1, ValueConvertor.convertToLocalDate(filter.getStartDate(), AssetConstants.DEFAULT_DATEFORMAT));
 					ps.setObject(2, ValueConvertor.convertToLocalDate(filter.getEndDate(), AssetConstants.DEFAULT_DATEFORMAT));
-				} else {
+				} else if (!"EXPIRED".equals(filter.getFilterType())){
 					ps.setString(1, filter.getFilterValue());
 				}
 			} else {

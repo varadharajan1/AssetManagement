@@ -34,6 +34,9 @@ public class DashboardController extends HttpServlet {
 			int totalNoOfBusiness = DAOFactory.getInstance().getAssetDashboardDAO().getNumberOfRows("BUSINESS");
 
 			Map<String,Integer> renewalCounts = DAOFactory.getInstance().getAssetInfoDAO().getRenewalPeriodCount(AssetConstants.INTERVALS);
+			
+			int expiredAssets = DAOFactory.getInstance().getAssetDashboardDAO().getNumberOfRows("EXPIRED");
+			renewalCounts.put("EXPIRED", expiredAssets);
 
 			Map<String,Integer> oemNameCounts = DAOFactory.getInstance().getAssetDashboardDAO().getOEMNameCount();
 			

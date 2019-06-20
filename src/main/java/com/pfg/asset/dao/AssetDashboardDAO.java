@@ -51,6 +51,8 @@ public class AssetDashboardDAO {
 
 	private String filterByOEMNameCount = "SELECT OEMName, count(*) FROM AssetInfo GROUP BY OEMName ORDER BY OEMName";
 	
+	private String filterByExpiredDateCount = "SELECT count(*) FROM AssetInfo WHERE SupportEndDate < CURRENT_DATE";
+
 	public int getNumberOfRows(String column) {
 		logger.log(Level.INFO, "getNumberOfRows() executed.");
 		
@@ -78,6 +80,8 @@ public class AssetDashboardDAO {
 				ps = conn.prepareStatement(distinctOEMNameCount);
 			} else if ("SERIAL".equals(column)) {
 				ps = conn.prepareStatement(distinctSerialNumberCount);
+			} else if ("EXPIRED".equals(column)) {
+				ps = conn.prepareStatement(filterByExpiredDateCount);
 			} else {
 				ps = conn.prepareStatement(selectCount);
 			}

@@ -117,6 +117,64 @@
 			var colors = ['#dc3545'];
 			var data = Array();
 			var labels = Array();
+			labels.push("Expired");
+			data.push("${renewalCounts['EXPIRED']}");
+
+			var pieChart = $("#doughnutChartExp");
+			if (pieChart) {
+				new Chart(pieChart,{
+				    type: 'doughnut',
+					data: {
+					   labels: labels,
+					   datasets: [{
+					     data: data,
+					     backgroundColor: colors,
+					     borderColor: colors,
+					     borderWidth: 1
+					   }]
+					},
+					options: {
+					    onClick : function (evt, item) {
+					    	console.log('legd item', item);
+							if (item[0]) {
+								var chartData = item[0]['_chart'].config.data;
+								var idx = item[0]['_index'];
+								//var label = chartData.labels[idx];
+								//var value = chartData.datasets[0].data[idx];
+								window.location.replace("/asset/filter?filterType=EXPIRED&filterValue="+chartData.labels[idx]);
+							}
+					    },
+						cutoutPercentage: 70,
+						layout: {
+				            padding: {
+				                left: 0,
+				                right: 0,
+				                top: 0,
+				                bottom: 0
+				            }
+				        },
+						legend: {
+							display: false,
+							position: "bottom"
+						},
+						title: {
+						    display: false,
+						    position: "top",
+						    text: 'Expired'
+						},
+						responsive: true
+					}
+				});
+			}
+		});
+	</script>
+
+	<script>
+		$(function () {
+			//var colors = ['#dc3545','#28a745','#adff2f','#007bff'];
+			var colors = ['#dc3545'];
+			var data = Array();
+			var labels = Array();
 			labels.push("3 months");
 			data.push("${renewalCounts['3 months']}");
 
@@ -398,7 +456,19 @@
  				<div class="row">
 				    <div class="col-md-6">
 		 				<div class="row">
+						    <div class="col-md-6">
+								<div class="card card-spacing ">
+									<div class="card-body card-exp align-items-center d-flex justify-content-center">
+										<canvas id="doughnutChartExp"></canvas>
+										<div class="absolute-center text-center">
+											<p class="label-text">Expired</p>
+											<p class="label-text"><c:out value="${renewalCounts['EXPIRED']}"/></p>
+										</div>
+									</div>
+								</div>
+				            </div>
 							<c:forEach items="<%=AssetConstants.INTERVALS%>" var="interval" varStatus="loop">
+							<c:if test="${interval ne '9 months' }">
 						    <div class="col-md-6">
 								<div class="card card-spacing ">
 									<div class="card-body card-${loop.index} align-items-center d-flex justify-content-center">
@@ -410,6 +480,7 @@
 									</div>
 								</div>
 				            </div>
+				            </c:if>
 							</c:forEach>
 		                </div>
 	                </div>

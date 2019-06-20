@@ -326,6 +326,7 @@
 							<option value='<fmt:message key="label.asset.filter.location" bundle="${resourceBundle}"/>'><fmt:message key="label.asset.filter.location.value" bundle="${resourceBundle}"/></option>
 							<option value='<fmt:message key="label.asset.filter.address" bundle="${resourceBundle}"/>'><fmt:message key="label.asset.filter.address.value" bundle="${resourceBundle}"/></option>
 							<option value='<fmt:message key="label.asset.filter.date" bundle="${resourceBundle}"/>'><fmt:message key="label.asset.filter.date.value" bundle="${resourceBundle}"/></option>
+							<option value='<fmt:message key="label.asset.filter.expired" bundle="${resourceBundle}"/>'><fmt:message key="label.asset.filter.expired.value" bundle="${resourceBundle}"/></option>
 						</select>
 					</div>
 				    <div class="form-group col-md-3 text-left">
