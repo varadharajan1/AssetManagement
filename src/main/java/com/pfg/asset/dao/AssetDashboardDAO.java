@@ -46,7 +46,7 @@ public class AssetDashboardDAO {
 	private String filterOEMName   = "SELECT DISTINCT OEMName FROM AssetInfo WHERE OEMName LIKE ? ORDER BY OEMName";
 	private String filterProductNumber   = "SELECT DISTINCT ProductNumber FROM AssetInfo WHERE ProductNumber LIKE ? ORDER BY ProductNumber";
 	private String filterDeployedLocation   = "SELECT DISTINCT DeployedLocation FROM AssetInfo WHERE DeployedLocation LIKE ? ORDER BY DeployedLocation";
-	private String filterDeployedAddress   = "SELECT DISTINCT Address1 FROM AssetInfo WHERE DeployedAddress1 LIKE ? ORDER BY Address1";
+	private String filterDeployedAddress   = "SELECT DISTINCT Address1 FROM AssetInfo WHERE Address1 LIKE ? ORDER BY Address1";
 	private String filterSerialNumber   = "SELECT DISTINCT SerialNumber FROM AssetInfo WHERE SerialNumber LIKE ? ORDER BY SerialNumber";
 
 	private String filterByOEMNameCount = "SELECT OEMName, count(*) FROM AssetInfo GROUP BY OEMName ORDER BY OEMName";
