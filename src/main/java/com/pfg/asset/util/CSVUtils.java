@@ -29,7 +29,7 @@ public class CSVUtils {
         	sb.append(resourceBundle.getString("label.asset.detail.deviceName")).append(DEFAULT_SEPARATOR);
         	sb.append(resourceBundle.getString("label.asset.detail.oemName")).append(DEFAULT_SEPARATOR);
         	sb.append(resourceBundle.getString("label.asset.detail.productNumber")).append(DEFAULT_SEPARATOR);
-        	sb.append(resourceBundle.getString("label.asset.detail.productDescription")).append(DEFAULT_SEPARATOR);
+        	sb.append(resourceBundle.getString("label.asset.detail.description")).append(DEFAULT_SEPARATOR);
         	sb.append(resourceBundle.getString("label.asset.detail.quantity")).append(DEFAULT_SEPARATOR);
         	sb.append(resourceBundle.getString("label.asset.detail.contractNumber")).append(DEFAULT_SEPARATOR);
         	sb.append(resourceBundle.getString("label.asset.detail.serviceLevel")).append(DEFAULT_SEPARATOR);
