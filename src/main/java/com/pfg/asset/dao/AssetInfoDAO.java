@@ -379,47 +379,50 @@ public class AssetInfoDAO {
 		Connection conn = null;
 	    PreparedStatement ps = null;
 	    int result = 0;
+	    String query = null;
 	    try {
-		    if(assetInfo != null) {
-		    	if (!validateAssetInputs(assetInfo)) {
+		    if(newAssetInfo != null) {
+		    	if (!validateAssetInputs(newAssetInfo)) {
 			    	throw new AssetException(AssetConstants.ERROR_REQUIRED_INPUT);
 			    }
 				conn = DataSourceListener.getAssetDS().getConnection();
 
-				logger.log(Level.INFO, "update SQL: {0} ", updateAssetInfo);
+				logger.log(Level.INFO, "update SQL before: {0} ", updateAssetInfo);
+
+				query = new String(updateAssetInfo);
 				
-				updateAssetInfo = updateAssetInfo.replaceFirst("~1", (assetInfo.getTrackName() == null) ? "TrackName IS NULL" : "TrackName='"+assetInfo.getTrackName()+"'");
-				updateAssetInfo = updateAssetInfo.replaceFirst("~2", (assetInfo.getBusinessSegment() == null) ? "BusinessSegment IS NULL" : "BusinessSegment='"+assetInfo.getBusinessSegment()+"'");
-				updateAssetInfo = updateAssetInfo.replaceFirst("~3", (assetInfo.getOpcoName() == null) ? "OpcoName IS NULL" : "OpcoName='"+assetInfo.getOpcoName()+"'");
-				updateAssetInfo = updateAssetInfo.replaceFirst("~4", (assetInfo.getDeviceName() == null) ? "DeviceName IS NULL" : "DeviceName='"+assetInfo.getDeviceName()+"'");
-				updateAssetInfo = updateAssetInfo.replaceFirst("~5", (assetInfo.getOemName() == null) ? "OemName IS NULL" : "OemName='"+assetInfo.getOemName()+"'");
-				updateAssetInfo = updateAssetInfo.replaceFirst("~6", (assetInfo.getContractedThrough() == null) ? "ContractedThrough IS NULL" : "ContractedThrough='"+assetInfo.getContractedThrough()+"'");
-				updateAssetInfo = updateAssetInfo.replaceFirst("~7", (assetInfo.getProductNumber() == null) ? "ProductNumber IS NULL" : "ProductNumber='"+assetInfo.getProductNumber()+"'");
-				updateAssetInfo = updateAssetInfo.replaceFirst("~8", (assetInfo.getProductDescription() == null) ? "ProductDescription IS NULL" : "ProductDescription='"+assetInfo.getProductDescription()+"'");
-				updateAssetInfo = updateAssetInfo.replaceFirst("~9", (assetInfo.getQuantity() == 0) ? "Quantity IS NULL" : "Quantity='"+assetInfo.getQuantity()+"'");
-				updateAssetInfo = updateAssetInfo.replaceFirst("~10", (assetInfo.getContractNumber() == null) ? "ContractNumber IS NULL" : "ContractNumber='"+assetInfo.getContractNumber()+"'");
-				updateAssetInfo = updateAssetInfo.replaceFirst("~11", (assetInfo.getServiceLevel() == null) ? "ServiceLevel IS NULL" : "ServiceLevel='"+assetInfo.getServiceLevel()+"'");
-				updateAssetInfo = updateAssetInfo.replaceFirst("~12", (assetInfo.getSerialNumber() == null) ? "SerialNumber IS NULL" : "SerialNumber='"+assetInfo.getSerialNumber()+"'");
-				updateAssetInfo = updateAssetInfo.replaceFirst("~13", (assetInfo.getServiceLevelDescription() == null) ? "ServiceLevelDescription IS NULL" : "ServiceLevelDescription='"+assetInfo.getServiceLevelDescription()+"'");
-				updateAssetInfo = updateAssetInfo.replaceFirst("~14", (assetInfo.getSku() == null) ? "SKU IS NULL" : "SKU='"+assetInfo.getSku()+"'");
-				updateAssetInfo = updateAssetInfo.replaceFirst("~15", (assetInfo.getSupportStartDate() == null) ? "SupportStartDate IS NULL" : "SupportStartDate='"+ ValueConvertor.convertToLocalDate(assetInfo.getSupportStartDate(), AssetConstants.DEFAULT_DATEFORMAT)+"'");
-				updateAssetInfo = updateAssetInfo.replaceFirst("~16", (assetInfo.getSupportEndDate() == null) ? "SupportEndDate IS NULL" : "SupportEndDate='"+ ValueConvertor.convertToLocalDate(assetInfo.getSupportEndDate(), AssetConstants.DEFAULT_DATEFORMAT)+"'");
-				updateAssetInfo = updateAssetInfo.replaceFirst("~17", (assetInfo.getEolDate() == null) ? "EolDate IS NULL" : "EolDate='"+ ValueConvertor.convertToLocalDate(assetInfo.getEolDate(), AssetConstants.DEFAULT_DATEFORMAT)+"'");
-				updateAssetInfo = updateAssetInfo.replaceFirst("~18", (assetInfo.getPurchasedDate() == null) ? "PurchasedDate IS NULL" : "PurchasedDate='"+ ValueConvertor.convertToLocalDate(assetInfo.getPurchasedDate(), AssetConstants.DEFAULT_DATEFORMAT)+"'");
-				updateAssetInfo = updateAssetInfo.replaceFirst("~19", (assetInfo.getInstalledDate() == null) ? "InstalledDate IS NULL" : "InstalledDate='"+ ValueConvertor.convertToLocalDate(assetInfo.getInstalledDate(), AssetConstants.DEFAULT_DATEFORMAT)+"'");
-				updateAssetInfo = updateAssetInfo.replaceFirst("~20", (assetInfo.getPurchasedVendor() == null) ? "PurchasedVendor IS NULL" : "PurchasedVendor='"+assetInfo.getPurchasedVendor()+"'");
-				updateAssetInfo = updateAssetInfo.replaceFirst("~21", (assetInfo.getPurchasedCost() == null) ? "PurchasedCost IS NULL" : "PurchasedCost='"+assetInfo.getPurchasedCost()+"'");
-				updateAssetInfo = updateAssetInfo.replaceFirst("~22", (assetInfo.getDeployedLocation() == null) ? "DeployedLocation IS NULL" : "DeployedLocation='"+assetInfo.getDeployedLocation()+"'");
-				updateAssetInfo = updateAssetInfo.replaceFirst("~23", (assetInfo.getAddress1() == null) ? "Address1 IS NULL" : "Address1='"+assetInfo.getAddress1()+"'");
-				updateAssetInfo = updateAssetInfo.replaceFirst("~24", (assetInfo.getAddress2() == null) ? "Address2 IS NULL" : "Address2='"+assetInfo.getAddress2()+"'");
-				updateAssetInfo = updateAssetInfo.replaceFirst("~25", (assetInfo.getCity() == null) ? "City IS NULL" : "City='"+assetInfo.getCity()+"'");
-				updateAssetInfo = updateAssetInfo.replaceFirst("~26", (assetInfo.getState() == null) ? "State IS NULL" : "State='"+assetInfo.getState()+"'");
-				updateAssetInfo = updateAssetInfo.replaceFirst("~27", (assetInfo.getCountry() == null) ? "Country IS NULL" : "Country='"+assetInfo.getCountry()+"'");
-				updateAssetInfo = updateAssetInfo.replaceFirst("~28", (assetInfo.getZipCode() == null) ? "ZipCode IS NULL" : "ZipCode='"+assetInfo.getZipCode()+"'");
+				query = query.replaceFirst("~1", (assetInfo.getTrackName() == null) ? "TrackName IS NULL" : "TrackName='"+assetInfo.getTrackName()+"'");
+				query = query.replaceFirst("~2", (assetInfo.getBusinessSegment() == null) ? "BusinessSegment IS NULL" : "BusinessSegment='"+assetInfo.getBusinessSegment()+"'");
+				query = query.replaceFirst("~3", (assetInfo.getOpcoName() == null) ? "OpcoName IS NULL" : "OpcoName='"+assetInfo.getOpcoName()+"'");
+				query = query.replaceFirst("~4", (assetInfo.getDeviceName() == null) ? "DeviceName IS NULL" : "DeviceName='"+assetInfo.getDeviceName()+"'");
+				query = query.replaceFirst("~5", (assetInfo.getOemName() == null) ? "OemName IS NULL" : "OemName='"+assetInfo.getOemName()+"'");
+				query = query.replaceFirst("~6", (assetInfo.getContractedThrough() == null) ? "ContractedThrough IS NULL" : "ContractedThrough='"+assetInfo.getContractedThrough()+"'");
+				query = query.replaceFirst("~7", (assetInfo.getProductNumber() == null) ? "ProductNumber IS NULL" : "ProductNumber='"+assetInfo.getProductNumber()+"'");
+				query = query.replaceFirst("~8", (assetInfo.getProductDescription() == null) ? "ProductDescription IS NULL" : "ProductDescription='"+assetInfo.getProductDescription()+"'");
+				query = query.replaceFirst("~9", (assetInfo.getQuantity() == 0) ? "Quantity IS NULL" : "Quantity='"+assetInfo.getQuantity()+"'");
+				query = query.replaceFirst("~10", (assetInfo.getContractNumber() == null) ? "ContractNumber IS NULL" : "ContractNumber='"+assetInfo.getContractNumber()+"'");
+				query = query.replaceFirst("~11", (assetInfo.getServiceLevel() == null) ? "ServiceLevel IS NULL" : "ServiceLevel='"+assetInfo.getServiceLevel()+"'");
+				query = query.replaceFirst("~12", (assetInfo.getSerialNumber() == null) ? "SerialNumber IS NULL" : "SerialNumber='"+assetInfo.getSerialNumber()+"'");
+				query = query.replaceFirst("~13", (assetInfo.getServiceLevelDescription() == null) ? "ServiceLevelDescription IS NULL" : "ServiceLevelDescription='"+assetInfo.getServiceLevelDescription()+"'");
+				query = query.replaceFirst("~14", (assetInfo.getSku() == null) ? "SKU IS NULL" : "SKU='"+assetInfo.getSku()+"'");
+				query = query.replaceFirst("~15", (assetInfo.getSupportStartDate() == null) ? "SupportStartDate IS NULL" : "SupportStartDate='"+ ValueConvertor.convertToLocalDate(assetInfo.getSupportStartDate(), AssetConstants.DEFAULT_DATEFORMAT)+"'");
+				query = query.replaceFirst("~16", (assetInfo.getSupportEndDate() == null) ? "SupportEndDate IS NULL" : "SupportEndDate='"+ ValueConvertor.convertToLocalDate(assetInfo.getSupportEndDate(), AssetConstants.DEFAULT_DATEFORMAT)+"'");
+				query = query.replaceFirst("~17", (assetInfo.getEolDate() == null) ? "EolDate IS NULL" : "EolDate='"+ ValueConvertor.convertToLocalDate(assetInfo.getEolDate(), AssetConstants.DEFAULT_DATEFORMAT)+"'");
+				query = query.replaceFirst("~18", (assetInfo.getPurchasedDate() == null) ? "PurchasedDate IS NULL" : "PurchasedDate='"+ ValueConvertor.convertToLocalDate(assetInfo.getPurchasedDate(), AssetConstants.DEFAULT_DATEFORMAT)+"'");
+				query = query.replaceFirst("~19", (assetInfo.getInstalledDate() == null) ? "InstalledDate IS NULL" : "InstalledDate='"+ ValueConvertor.convertToLocalDate(assetInfo.getInstalledDate(), AssetConstants.DEFAULT_DATEFORMAT)+"'");
+				query = query.replaceFirst("~20", (assetInfo.getPurchasedVendor() == null) ? "PurchasedVendor IS NULL" : "PurchasedVendor='"+assetInfo.getPurchasedVendor()+"'");
+				query = query.replaceFirst("~21", (assetInfo.getPurchasedCost() == null) ? "PurchasedCost IS NULL" : "PurchasedCost='"+assetInfo.getPurchasedCost()+"'");
+				query = query.replaceFirst("~22", (assetInfo.getDeployedLocation() == null) ? "DeployedLocation IS NULL" : "DeployedLocation='"+assetInfo.getDeployedLocation()+"'");
+				query = query.replaceFirst("~23", (assetInfo.getAddress1() == null) ? "Address1 IS NULL" : "Address1='"+assetInfo.getAddress1()+"'");
+				query = query.replaceFirst("~24", (assetInfo.getAddress2() == null) ? "Address2 IS NULL" : "Address2='"+assetInfo.getAddress2()+"'");
+				query = query.replaceFirst("~25", (assetInfo.getCity() == null) ? "City IS NULL" : "City='"+assetInfo.getCity()+"'");
+				query = query.replaceFirst("~26", (assetInfo.getState() == null) ? "State IS NULL" : "State='"+assetInfo.getState()+"'");
+				query = query.replaceFirst("~27", (assetInfo.getCountry() == null) ? "Country IS NULL" : "Country='"+assetInfo.getCountry()+"'");
+				query = query.replaceFirst("~28", (assetInfo.getZipCode() == null) ? "ZipCode IS NULL" : "ZipCode='"+assetInfo.getZipCode()+"'");
 
-				logger.log(Level.INFO, "update SQL: {0} ", updateAssetInfo);
+				logger.log(Level.INFO, "update SQL after: {0} ", query);
 
-				ps = conn.prepareStatement(updateAssetInfo);
+				ps = conn.prepareStatement(query);
 
 				populatePreparedStatement(ps, newAssetInfo);
 				result = ps.executeUpdate();

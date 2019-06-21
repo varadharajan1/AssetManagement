@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.pfg.asset.dao.DAOFactory;
+import com.pfg.asset.dto.AssetConfig;
 import com.pfg.asset.dto.AssetInfo;
 import com.pfg.asset.dto.FilterParam;
 import com.pfg.asset.dto.Pagination;
@@ -53,6 +54,9 @@ public class FilterController extends HttpServlet {
 			logger.log(Level.INFO, "toDate: {0}", toDate );
 			logger.log(Level.INFO, "renewal: {0}", renewal );
 
+			AssetConfig assetConfig  = DAOFactory.getInstance().getAssetConfigDAO().selectAssetConfig();
+			records =  assetConfig.getRecordsPerPage();
+			
 			if(Validator.isNotEmpty(currentPage) && Validator.isAllNumbers(currentPage)) {
 				page = Integer.parseInt(currentPage);
 			}

@@ -48,6 +48,7 @@
 			}
 			if(rowSelectedObject.length == 1){
 				var asset = rowSelectedObject[0];
+				console.log(rowSelectedObject[0]);
                 $("#trackName").val(asset.trackName);
 				$("#businessSegment").val(asset.businessSegment);
 				$("#opcoName").val(asset.opcoName);

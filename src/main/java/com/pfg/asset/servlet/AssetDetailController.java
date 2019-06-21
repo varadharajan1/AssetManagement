@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.pfg.asset.dao.DAOFactory;
+import com.pfg.asset.dto.AssetConfig;
 import com.pfg.asset.dto.AssetInfo;
 import com.pfg.asset.dto.Pagination;
 import com.pfg.asset.util.AssetConstants;
@@ -40,6 +41,9 @@ public class AssetDetailController extends HttpServlet {
 			String currentPage = request.getParameter("currentPage");
 			String recordsPerPage = request.getParameter("recordsPerPage");
 
+			AssetConfig assetConfig  = DAOFactory.getInstance().getAssetConfigDAO().selectAssetConfig();
+			records =  assetConfig.getRecordsPerPage();
+			
 			if(Validator.isNotEmpty(currentPage) && Validator.isAllNumbers(currentPage)) {
 				page = Integer.parseInt(currentPage);
 			}

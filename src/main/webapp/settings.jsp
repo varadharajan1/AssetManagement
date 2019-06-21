@@ -92,7 +92,7 @@
 								<div class="next text-on-pannel text-primary"><span><fmt:message key="label.asset.settings.other" bundle="${resourceBundle}"/></span></div>
 							    <div class="text-right row form-group">
 									<label class="col-md-4" for="recordsPerPage"><fmt:message key="label.asset.settings.recordsPerPage" bundle="${resourceBundle}"/></label>
-									<input type="text" class="form-control form-control-sm col-md-1" id="recordsPerPage" name="recordsPerPage" value="${assetConfig.recordsPerPage}" readonly="readonly">		                    
+									<input type="text" class="form-control form-control-sm col-md-1" id="recordsPerPage" name="recordsPerPage" value="${assetConfig.recordsPerPage}">		                    
 								</div>
 							    <div class="text-right row form-group">
 									<label class="col-md-4" for="cronExpression"><fmt:message key="label.asset.settings.cronExpression" bundle="${resourceBundle}"/></label>

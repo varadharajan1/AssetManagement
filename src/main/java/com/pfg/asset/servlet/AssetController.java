@@ -52,6 +52,7 @@ public class AssetController extends HttpServlet {
 			    	request.setAttribute(AssetConstants.MESSAGE_KEY, "Multiple Rows Selected");
 					logger.log(Level.INFO, "Multiple Rows Selected");
 		        }
+				logger.log(Level.INFO, "assetSelected: {0}", assetSelected );
 		    	request.setAttribute(AssetConstants.ROW_SELECTED, assetSelected);
 		    	request.setAttribute("filterType", filterType);
 		    	request.setAttribute("filterValue", filterValue);
@@ -125,7 +126,6 @@ public class AssetController extends HttpServlet {
 				logger.log(Level.INFO, "asset: {0}", asset );
 
 				if("update".equalsIgnoreCase(action)) {
-					logger.log(Level.INFO, "assetSelected: {0}", assetSelected );
 			        if(assetSelectedList != null ) {
 			        	logger.log(Level.INFO, "assetSelectedList.size: {0}", assetSelectedList.size() );
 			        }

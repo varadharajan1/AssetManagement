@@ -100,6 +100,8 @@ public class SettingsController extends HttpServlet {
 					if(Validator.isNotEmpty(renewalPeriodOption)) {
 						assetConfig.setRenewalPeriod(renewalPeriodOption);
 					}
+					assetConfig.setRecordsPerPage(records);
+					
 					int rows = DAOFactory.getInstance().getAssetConfigDAO().updateAssetConfig(assetConfig);
 					message = rows + " row(s) updated.";
 					request.setAttribute(AssetConstants.MESSAGE_KEY, message);
