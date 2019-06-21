@@ -51,13 +51,13 @@
 		            { "visible":true, "orderable": false, defaultContent: '', className: "control" },
 		            { "visible":true, "orderable": false, defaultContent: '', className: "select-checkbox" },
 		            { "data": "trackName", "visible":true, "orderable": false },
-		            { "data": "businessSegment", "visible":true, "orderable": false },
-		            { "data": "oemName", "visible":true, "orderable": false },
 		            { "data": "opcoName", "visible":true, "orderable": false, defaultContent: '' },
 		            { "data": "deviceName", "visible":true, "orderable": false, defaultContent: '' },
 		            { "data": "serialNumber", "visible":true, "orderable": false, defaultContent: '' },
-		            { "data": "supportStartDate", "visible":true, "orderable": false, defaultContent: '' },
 		            { "data": "supportEndDate", "visible":true, "orderable": true },
+		            { "data": "businessSegment", "visible":true, "orderable": false },
+		            { "data": "oemName", "visible":true, "orderable": false },
+		            { "data": "supportStartDate", "visible":true, "orderable": false, defaultContent: '' },
 		            { "data": "contractedThrough", "visible":true, "orderable": false, defaultContent: '' },
 		            { "data": "serviceLevel", "visible":true, "orderable": false, defaultContent: '' },
 		            { "data": "productNumber", "visible":true, "orderable": false, defaultContent: ''  },
@@ -381,13 +381,13 @@
 		                    <th>&nbsp;</th>
 		                    <th>&nbsp;</th>
 		                    <th><fmt:message key="label.asset.detail.trackName" bundle="${resourceBundle}"/></th>
-		                    <th><fmt:message key="label.asset.detail.businessSegment" bundle="${resourceBundle}"/></th>
-		                    <th><fmt:message key="label.asset.detail.oemName" bundle="${resourceBundle}"/></th>
 		                    <th><fmt:message key="label.asset.detail.opcoName" bundle="${resourceBundle}"/></th>
 		                    <th><fmt:message key="label.asset.detail.deviceName" bundle="${resourceBundle}"/></th>
 		                    <th><fmt:message key="label.asset.detail.serialNumber" bundle="${resourceBundle}"/></th>
-		                    <th><fmt:message key="label.asset.detail.startDate" bundle="${resourceBundle}"/></th>
 		                    <th><fmt:message key="label.asset.detail.endDate" bundle="${resourceBundle}"/></th>
+		                    <th><fmt:message key="label.asset.detail.businessSegment" bundle="${resourceBundle}"/></th>
+		                    <th><fmt:message key="label.asset.detail.oemName" bundle="${resourceBundle}"/></th>
+		                    <th><fmt:message key="label.asset.detail.startDate" bundle="${resourceBundle}"/></th>
 		                    <th><fmt:message key="label.asset.detail.contractedThrough" bundle="${resourceBundle}"/></th>
 		                    <th><fmt:message key="label.asset.detail.serviceLevel" bundle="${resourceBundle}"/></th>
 		                    <th><fmt:message key="label.asset.detail.productNumber" bundle="${resourceBundle}"/></th>
