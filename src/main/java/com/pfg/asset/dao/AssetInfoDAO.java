@@ -389,7 +389,7 @@ public class AssetInfoDAO {
 
 				logger.log(Level.INFO, "update SQL before: {0} ", updateAssetInfo);
 
-				query = new String(updateAssetInfo);
+				query = updateAssetInfo;
 				
 				query = query.replaceFirst("~1", (assetInfo.getTrackName() == null) ? "TrackName IS NULL" : "TrackName='"+assetInfo.getTrackName()+"'");
 				query = query.replaceFirst("~2", (assetInfo.getBusinessSegment() == null) ? "BusinessSegment IS NULL" : "BusinessSegment='"+assetInfo.getBusinessSegment()+"'");

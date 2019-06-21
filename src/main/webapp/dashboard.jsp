@@ -172,7 +172,7 @@
 	<script>
 		$(function () {
 			//var colors = ['#dc3545','#28a745','#adff2f','#007bff'];
-			var colors = ['#dc3545'];
+			var colors = ['#28a745'];
 			var data = Array();
 			var labels = Array();
 			labels.push("3 months");
@@ -228,7 +228,7 @@
 	</script>
 	<script>
 		$(function () {
-			var colors1 = ['#28a745'];
+			var colors1 = ['#adff2f'];
 			var data1 = Array();
 			var labels1 = Array();
 			labels1.push("6 months");
