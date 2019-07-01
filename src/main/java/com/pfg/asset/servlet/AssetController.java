@@ -34,7 +34,7 @@ public class AssetController extends HttpServlet {
 		String message = "";
 		String filename = "asset-entry.jsp";
 		List<AssetInfo> assetSelectedList = null;
-
+		
 		try {
         	String action = request.getParameter("action");
 			String filterType = request.getParameter("filterType");
@@ -110,7 +110,7 @@ public class AssetController extends HttpServlet {
 				asset.setCountry(deployedCountry);
 				asset.setContractNumber(contractNumber);
 				asset.setContractedThrough(contractedThrough);
-				asset.setQuantity(Validator.isAllNumbers(quantity) ? Integer.parseInt(quantity) : 0);
+				asset.setQuantity(quantity);
 				asset.setSerialNumber(serialNumber);
 				asset.setServiceLevel(serviceLevel);
 				asset.setServiceLevelDescription(serviceLevelDescription);

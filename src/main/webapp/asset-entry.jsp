@@ -122,24 +122,24 @@
 			<input type="hidden" id="rowSelected" name="rowSelected">
 			<div class="main-content">
 		        <div class="pb-3 form-row">
-				    <div class="text-left form-group required col-md-2">
-				    	<label class="pl-1 control-label" for="trackName"><fmt:message key="label.asset.detail.trackName" bundle="${resourceBundle}"/></label>
+				    <div class="text-left form-group col-md-2">
+				    	<label class="pl-1" for="trackName"><fmt:message key="label.asset.detail.trackName" bundle="${resourceBundle}"/></label>
 				    	<input type="text" class="form-control form-control-sm" id="trackName" name="trackName">
 					</div>
-				    <div class="text-left form-group required  col-md-2">
-	                    <label class="pl-1 control-label" for="businessSegment"><fmt:message key="label.asset.detail.businessSegment" bundle="${resourceBundle}"/></label>
+				    <div class="text-left form-group col-md-2">
+	                    <label class="pl-1" for="businessSegment"><fmt:message key="label.asset.detail.businessSegment" bundle="${resourceBundle}"/></label>
 				    	<input type="text" class="form-control form-control-sm" id="businessSegment" name="businessSegment">
 					</div>
-				    <div class="text-left form-group required  col-md-2">
-	                    <label class="pl-1 control-label" for="oemName"><fmt:message key="label.asset.detail.oemName" bundle="${resourceBundle}"/></label>
+				    <div class="text-left form-group col-md-2">
+	                    <label class="pl-1" for="oemName"><fmt:message key="label.asset.detail.oemName" bundle="${resourceBundle}"/></label>
 				    	<input type="text" class="form-control form-control-sm" id="oemName" name="oemName">
 					</div>
-				    <div class="text-left form-group required  col-md-2">
-	                    <label class="pl-1 control-label" for="opcoName"><fmt:message key="label.asset.detail.opcoName" bundle="${resourceBundle}"/></label>
+				    <div class="text-left form-group col-md-2">
+	                    <label class="pl-1" for="opcoName"><fmt:message key="label.asset.detail.opcoName" bundle="${resourceBundle}"/></label>
 				    	<input type="text" class="form-control form-control-sm" id="opcoName" name="opcoName">
 					</div>
-				    <div class="text-left form-group required  col-md-3">
-	                    <label class="pl-1 control-label" for="deviceName"><fmt:message key="label.asset.detail.deviceName" bundle="${resourceBundle}"/></label>
+				    <div class="text-left form-group col-md-3">
+	                    <label class="pl-1" for="deviceName"><fmt:message key="label.asset.detail.deviceName" bundle="${resourceBundle}"/></label>
 				    	<input type="text" class="form-control form-control-sm" id="deviceName" name="deviceName">
 					</div>
 				</div>
@@ -148,8 +148,8 @@
                         <label class="pl-1" for="contractedThrough"><fmt:message key="label.asset.detail.contractedThrough" bundle="${resourceBundle}"/></label>
 						<input type="text" class="form-control form-control-sm" id="contractedThrough" name="contractedThrough">		                    
 					</div>
-				    <div class="text-left form-group required col-md-3">
-                        <label class="pl-1 control-label" for="productNumber"><fmt:message key="label.asset.detail.productNumber" bundle="${resourceBundle}"/></label>
+				    <div class="text-left form-group col-md-3">
+                        <label class="pl-1" for="productNumber"><fmt:message key="label.asset.detail.productNumber" bundle="${resourceBundle}"/></label>
 				    	<input type="text" class="form-control form-control-sm" id="productNumber" name="productNumber">
 					</div>
 				    <div class="text-left form-group col-md-4">
@@ -160,8 +160,8 @@
                         <label class="pl-1" for="quantity"><fmt:message key="label.asset.detail.quantity" bundle="${resourceBundle}"/></label>
 						<input type="text" class="form-control form-control-sm" id="quantity" name="quantity">		                    
 					</div>
-				    <div class="text-left form-group required col-md-2">
-                        <label class="pl-1 control-label" for="serialNumber"><fmt:message key="label.asset.detail.serialNumber" bundle="${resourceBundle}"/></label>
+				    <div class="text-left form-group col-md-2">
+                        <label class="pl-1" for="serialNumber"><fmt:message key="label.asset.detail.serialNumber" bundle="${resourceBundle}"/></label>
 						<input type="text" class="form-control form-control-sm" id="serialNumber" name="serialNumber">		                    
 					</div>
 				</div>	                
@@ -195,8 +195,8 @@
 							<span class="input-group-addon"><span class="fa fa-calendar"></span></span>
 						</div>
                     </div>
-				    <div class="text-left form-group required col-md-2">
-                        <label class="pl-1 control-label" for="supportEndDate"><fmt:message key="label.asset.detail.endDate" bundle="${resourceBundle}"/></label>
+				    <div class="text-left form-group col-md-2">
+                        <label class="pl-1" for="supportEndDate"><fmt:message key="label.asset.detail.endDate" bundle="${resourceBundle}"/></label>
                         <div class="input-group date" id="datepicker2">
                             <input type="text" class="form-control form-control-sm" id="supportEndDate" name="supportEndDate"/>
                             <span class="input-group-addon"><span class="fa fa-calendar"></span></span>

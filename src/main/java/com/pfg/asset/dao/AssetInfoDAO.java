@@ -28,6 +28,7 @@ public class AssetInfoDAO {
 	private String deleteAssetInfo = "DELETE FROM AssetInfo WHERE TrackName=? AND BusinessSegment=? AND OPCOName=? AND DeviceName=? AND OEMName=? AND ProductNumber=? AND SerialNumber=? AND SupportEndDate=? AND DeployedLocation=? AND Address1=?";
 	//private String updateAssetInfo = "UPDATE AssetInfo SET TrackName=?, BusinessSegment=?, OPCOName=?, DeviceName=?, OEMName=?, ContractedThrough=?, ProductNumber=?, ProductDescription=?, Quantity=?, ContractNumber=?, ServiceLevel=?, SerialNumber=?, ServiceLevelDescription=?, SKU=?, SupportStartDate=?, SupportEndDate=?, EOLDate=?, PurchasedDate=?, PurchasedVendor=?, InstalledDate=?, PurchasedCost=?, DeployedLocation=?, Address1=?, Address2=?, City=?, State=?, ZipCode=?, Country=?, LastUpdated=CURRENT_DATE WHERE TrackName=? AND BusinessSegment=? AND OPCOName=? AND DeviceName=? AND OEMName=? AND ContractedThrough=? AND ProductNumber=? AND ProductDescription=? AND Quantity=? AND ContractNumber=? AND ServiceLevel=? AND SerialNumber=? AND ServiceLevelDescription=? AND SKU=? AND SupportStartDate=? AND SupportEndDate=? AND EOLDate=? AND PurchasedDate=? AND PurchasedVendor=? AND InstalledDate=? AND PurchasedCost=? AND DeployedLocation=? AND Address1=? AND Address2=? AND City=? AND State=? AND ZipCode=? AND Country=?";
 	private String updateAssetInfo = "UPDATE AssetInfo SET TrackName=?, BusinessSegment=?, OPCOName=?, DeviceName=?, OEMName=?, ContractedThrough=?, ProductNumber=?, ProductDescription=?, Quantity=?, ContractNumber=?, ServiceLevel=?, SerialNumber=?, ServiceLevelDescription=?, SKU=?, SupportStartDate=?, SupportEndDate=?, EOLDate=?, PurchasedDate=?, PurchasedVendor=?, InstalledDate=?, PurchasedCost=?, DeployedLocation=?, Address1=?, Address2=?, City=?, State=?, ZipCode=?, Country=?, LastUpdated=CURRENT_DATE WHERE ~1 AND ~2 AND ~3 AND ~4 AND ~5 AND ~6 AND ~7 AND ~8 AND ~9 AND ~10 AND ~11 AND ~12 AND ~13 AND ~14 AND ~15 AND ~16 AND ~17 AND ~18 AND ~19 AND ~20 AND ~21 AND ~22 AND ~23 AND ~24 AND ~25 AND ~26 AND ~27 AND ~28";
+	private String updateAssetInfoMultiple = "UPDATE AssetInfo SET ~#, LastUpdated=CURRENT_DATE WHERE ~1 AND ~2 AND ~3 AND ~4 AND ~5 AND ~6 AND ~7 AND ~8 AND ~9 AND ~10 AND ~11 AND ~12 AND ~13 AND ~14 AND ~15 AND ~16 AND ~17 AND ~18 AND ~19 AND ~20 AND ~21 AND ~22 AND ~23 AND ~24 AND ~25 AND ~26 AND ~27 AND ~28";
 	
 	private String selectAll = "SELECT TrackName, BusinessSegment, OPCOName, DeviceName, OEMName, ContractedThrough, ProductNumber, ProductDescription, Quantity, ContractNumber, ServiceLevel, SerialNumber, ServiceLevelDescription, SKU, SupportStartDate, SupportEndDate, EOLDate, PurchasedDate, PurchasedVendor, InstalledDate, PurchasedCost, DeployedLocation, Address1, Address2, City, State, ZipCode, Country, Created, LastUpdated, UpdatedBy FROM AssetInfo ORDER BY SupportStartDate, SupportEndDate";
 	private String selectLimit = "SELECT TrackName, BusinessSegment, OPCOName, DeviceName, OEMName, ContractedThrough, ProductNumber, ProductDescription, Quantity, ContractNumber, ServiceLevel, SerialNumber, ServiceLevelDescription, SKU, SupportStartDate, SupportEndDate, EOLDate, PurchasedDate, PurchasedVendor, InstalledDate, PurchasedCost, DeployedLocation, Address1, Address2, City, State, ZipCode, Country, Created, LastUpdated, UpdatedBy FROM AssetInfo ORDER BY SupportStartDate, SupportEndDate OFFSET ? LIMIT ?";
@@ -267,88 +268,6 @@ public class AssetInfoDAO {
 	    return result;
 	}
 
-	public int batchUpdate(List<AssetInfo> assetInfoList, AssetInfo newAssetInfo) {
-		logger.log(Level.INFO, "entered");
-		
-		Connection conn = null;
-	    PreparedStatement ps = null;
-	    int result = 0;
-	    try {
-		    if(assetInfoList != null) {
-				conn = DataSourceListener.getAssetDS().getConnection();
-				conn.setAutoCommit(false);
-				
-				logger.log(Level.INFO, "update SQL: {0} ", updateAssetInfo);
-				
-				ps = conn.prepareStatement(updateAssetInfo);
-				logger.log(Level.INFO, "newAssetInfo: {0} ", newAssetInfo);
-				for(AssetInfo assetInfo : assetInfoList) {
-					
-					logger.log(Level.INFO, "assetInfo: {0} ", assetInfo);
-
-					populatePreparedStatement(ps, newAssetInfo);
-					
-					ps.setString(29, assetInfo.getTrackName());
-					ps.setString(30, assetInfo.getBusinessSegment());
-					ps.setString(31, assetInfo.getOpcoName());
-					ps.setString(32, assetInfo.getDeviceName());
-					ps.setString(33, assetInfo.getOemName());
-					ps.setString(34, assetInfo.getContractedThrough());
-					ps.setString(35, assetInfo.getProductNumber());
-					ps.setString(36, assetInfo.getProductDescription());
-					ps.setInt(37, assetInfo.getQuantity());
-					ps.setString(38, assetInfo.getContractNumber());
-					ps.setString(39, assetInfo.getServiceLevel());
-					ps.setString(40, assetInfo.getSerialNumber());
-					ps.setString(41, assetInfo.getServiceLevelDescription());
-					ps.setString(42, assetInfo.getSku());
-					ps.setObject(43, ValueConvertor.convertToLocalDate(assetInfo.getSupportStartDate(), AssetConstants.DEFAULT_DATEFORMAT));
-					ps.setObject(44, ValueConvertor.convertToLocalDate(assetInfo.getSupportEndDate(), AssetConstants.DEFAULT_DATEFORMAT));
-					ps.setObject(45, ValueConvertor.convertToLocalDate(assetInfo.getEolDate(), AssetConstants.DEFAULT_DATEFORMAT));
-					ps.setObject(46, ValueConvertor.convertToLocalDate(assetInfo.getPurchasedDate(), AssetConstants.DEFAULT_DATEFORMAT));
-					ps.setString(47, assetInfo.getPurchasedVendor());
-					ps.setObject(48, ValueConvertor.convertToLocalDate(assetInfo.getInstalledDate(), AssetConstants.DEFAULT_DATEFORMAT));
-					ps.setString(49, assetInfo.getPurchasedCost());
-					ps.setString(50, assetInfo.getDeployedLocation());
-					ps.setString(51, assetInfo.getAddress1());
-					ps.setString(52, assetInfo.getAddress2());
-					ps.setString(53, assetInfo.getCity());
-					ps.setString(54, assetInfo.getState());
-					ps.setString(55, assetInfo.getCountry());
-					ps.setString(56, assetInfo.getZipCode());
-
-					ps.addBatch();
-				}
-				int[] batchResult = ps.executeBatch();
-				conn.commit();
-				
-				result = IntStream.of(batchResult).sum();
-				
-				logger.log(Level.INFO, "AssetDetailDAO: {0} row(s) modified.", result);
-		    }else {
-				logger.log(Level.INFO, AssetConstants.ERROR_INVALID_INPUT);
-		    	throw new AssetException(AssetConstants.ERROR_INVALID_INPUT);
-		    }
-	    } catch (Exception e) {
-	    	try {
-	    		if(conn != null) {
-	    			conn.rollback();
-	    		}
-	    	}catch(Exception ee) {
-				logger.log(Level.SEVERE, ee.getMessage(), ee);
-	    	}
-			logger.log(Level.SEVERE, e.getMessage(), e);
-			throw new AssetException(e.getMessage());
-	    }
-	    finally {
-			DAOUtil.closePreparedStatement(ps);
-			DAOUtil.close(conn);
-	    }
-	    logger.log(Level.INFO, "exited");
-	    
-	    return result;
-	}
-
 	public int updateAssetDetails(List<AssetInfo> assetInfoList, AssetInfo newAssetInfo) {
 		logger.log(Level.INFO, "entered");
 		
@@ -356,7 +275,7 @@ public class AssetInfoDAO {
 	    try {
 		    if(assetInfoList != null) {
 				for(AssetInfo assetInfo : assetInfoList) {
-					result = result + updateAssetDetail(assetInfo, newAssetInfo);
+					result = result + updateAssetDetail(assetInfo, newAssetInfo, (assetInfoList.size() > 1 ? true : false));
 				}
 				
 				logger.log(Level.INFO, "AssetDetailDAO: {0} row(s) modified.", result);
@@ -373,7 +292,7 @@ public class AssetInfoDAO {
 	    return result;
 	}
 
-	public int updateAssetDetail(AssetInfo assetInfo, AssetInfo newAssetInfo) {
+	public int updateAssetDetail(AssetInfo assetInfo, AssetInfo newAssetInfo, boolean isMultipleUpdate) {
 		logger.log(Level.INFO, "entered");
 		
 		Connection conn = null;
@@ -387,9 +306,15 @@ public class AssetInfoDAO {
 			    }
 				conn = DataSourceListener.getAssetDS().getConnection();
 
-				logger.log(Level.INFO, "update SQL before: {0} ", updateAssetInfo);
 
-				query = updateAssetInfo;
+				if(isMultipleUpdate) {
+					query = updateAssetInfoMultiple;
+					String str = populateMultipleUpdateQuery(newAssetInfo);
+					query = query.replaceFirst("~#",str);
+				}else {
+					query = updateAssetInfo;
+				}
+				logger.log(Level.INFO, "update SQL before: {0} ", query);
 				
 				query = query.replaceFirst("~1", (assetInfo.getTrackName() == null) ? "TrackName IS NULL" : "TrackName='"+assetInfo.getTrackName()+"'");
 				query = query.replaceFirst("~2", (assetInfo.getBusinessSegment() == null) ? "BusinessSegment IS NULL" : "BusinessSegment='"+assetInfo.getBusinessSegment()+"'");
@@ -399,7 +324,7 @@ public class AssetInfoDAO {
 				query = query.replaceFirst("~6", (assetInfo.getContractedThrough() == null) ? "ContractedThrough IS NULL" : "ContractedThrough='"+assetInfo.getContractedThrough()+"'");
 				query = query.replaceFirst("~7", (assetInfo.getProductNumber() == null) ? "ProductNumber IS NULL" : "ProductNumber='"+assetInfo.getProductNumber()+"'");
 				query = query.replaceFirst("~8", (assetInfo.getProductDescription() == null) ? "ProductDescription IS NULL" : "ProductDescription='"+assetInfo.getProductDescription()+"'");
-				query = query.replaceFirst("~9", (assetInfo.getQuantity() == 0) ? "Quantity IS NULL" : "Quantity='"+assetInfo.getQuantity()+"'");
+				query = query.replaceFirst("~9", (assetInfo.getQuantity() == null) ? "Quantity IS NULL" : "Quantity='"+assetInfo.getQuantity()+"'");
 				query = query.replaceFirst("~10", (assetInfo.getContractNumber() == null) ? "ContractNumber IS NULL" : "ContractNumber='"+assetInfo.getContractNumber()+"'");
 				query = query.replaceFirst("~11", (assetInfo.getServiceLevel() == null) ? "ServiceLevel IS NULL" : "ServiceLevel='"+assetInfo.getServiceLevel()+"'");
 				query = query.replaceFirst("~12", (assetInfo.getSerialNumber() == null) ? "SerialNumber IS NULL" : "SerialNumber='"+assetInfo.getSerialNumber()+"'");
@@ -424,7 +349,9 @@ public class AssetInfoDAO {
 
 				ps = conn.prepareStatement(query);
 
-				populatePreparedStatement(ps, newAssetInfo);
+				if(!isMultipleUpdate) {
+					populatePreparedStatement(ps, newAssetInfo);
+				}
 				result = ps.executeUpdate();
 
 				logger.log(Level.INFO, "{0} row(s) modified.", result);
@@ -704,6 +631,45 @@ public class AssetInfoDAO {
 	    return result;
 	}
 
+	private String populateMultipleUpdateQuery(AssetInfo assetInfo){
+		StringBuilder sb = new StringBuilder();
+		sb.append(Validator.isEmpty(assetInfo.getTrackName()) ? "": "TrackName='"+assetInfo.getTrackName()+"', ");
+		sb.append(Validator.isEmpty(assetInfo.getBusinessSegment()) ? "" : "BusinessSegment='"+assetInfo.getBusinessSegment()+"', ");
+		sb.append(Validator.isEmpty(assetInfo.getOpcoName()) ? "" : "OpcoName='"+assetInfo.getOpcoName()+"', ");
+		sb.append(Validator.isEmpty(assetInfo.getDeviceName()) ? "" : "DeviceName='"+assetInfo.getDeviceName()+"', ");
+		sb.append(Validator.isEmpty(assetInfo.getOemName()) ? "" : "OemName='"+assetInfo.getOemName()+"', ");
+		sb.append(Validator.isEmpty(assetInfo.getContractedThrough()) ? "" : "ContractedThrough='"+assetInfo.getContractedThrough()+"', ");
+		sb.append(Validator.isEmpty(assetInfo.getProductNumber()) ? "" : "ProductNumber='"+assetInfo.getProductNumber()+"', ");
+		sb.append(Validator.isEmpty(assetInfo.getProductDescription()) ? "" : "ProductDescription='"+assetInfo.getProductDescription()+"', ");
+		sb.append(Validator.isEmpty(assetInfo.getQuantity()) ? "" : "Quantity='"+assetInfo.getQuantity()+"', ");
+		sb.append(Validator.isEmpty(assetInfo.getContractNumber()) ? "" : "ContractNumber='"+assetInfo.getContractNumber()+"', ");
+		sb.append(Validator.isEmpty(assetInfo.getServiceLevel()) ? "" : "ServiceLevel='"+assetInfo.getServiceLevel()+"', ");
+		sb.append(Validator.isEmpty(assetInfo.getSerialNumber()) ? "" : "SerialNumber='"+assetInfo.getSerialNumber()+"', ");
+		sb.append(Validator.isEmpty(assetInfo.getServiceLevelDescription()) ? "" : "ServiceLevelDescription='"+assetInfo.getServiceLevelDescription()+"', ");
+		sb.append(Validator.isEmpty(assetInfo.getSku()) ? "" : "SKU='"+assetInfo.getSku()+"', ");
+		sb.append(Validator.isEmpty(assetInfo.getSupportStartDate()) ? "" : "SupportStartDate='"+ ValueConvertor.convertToLocalDate(assetInfo.getSupportStartDate(), AssetConstants.DEFAULT_DATEFORMAT)+"', ");
+		sb.append(Validator.isEmpty(assetInfo.getSupportEndDate()) ? "" : "SupportEndDate='"+ ValueConvertor.convertToLocalDate(assetInfo.getSupportEndDate(), AssetConstants.DEFAULT_DATEFORMAT)+"', ");
+		sb.append(Validator.isEmpty(assetInfo.getEolDate()) ? "" : "EolDate='"+ ValueConvertor.convertToLocalDate(assetInfo.getEolDate(), AssetConstants.DEFAULT_DATEFORMAT)+"', ");
+		sb.append(Validator.isEmpty(assetInfo.getPurchasedDate()) ? "" : "PurchasedDate='"+ ValueConvertor.convertToLocalDate(assetInfo.getPurchasedDate(), AssetConstants.DEFAULT_DATEFORMAT)+"', ");
+		sb.append(Validator.isEmpty(assetInfo.getInstalledDate()) ? "" : "InstalledDate='"+ ValueConvertor.convertToLocalDate(assetInfo.getInstalledDate(), AssetConstants.DEFAULT_DATEFORMAT)+"', ");
+		sb.append(Validator.isEmpty(assetInfo.getPurchasedVendor()) ? "" : "PurchasedVendor='"+assetInfo.getPurchasedVendor()+"', ");
+		sb.append(Validator.isEmpty(assetInfo.getPurchasedCost()) ? "" : "PurchasedCost='"+assetInfo.getPurchasedCost()+"', ");
+		sb.append(Validator.isEmpty(assetInfo.getDeployedLocation()) ? "" : "DeployedLocation='"+assetInfo.getDeployedLocation()+"', ");
+		sb.append(Validator.isEmpty(assetInfo.getAddress1()) ? "" : "Address1='"+assetInfo.getAddress1()+"', ");
+		sb.append(Validator.isEmpty(assetInfo.getAddress2()) ? "" : "Address2='"+assetInfo.getAddress2()+"', ");
+		sb.append(Validator.isEmpty(assetInfo.getCity()) ? "" : "City='"+assetInfo.getCity()+"', ");
+		sb.append(Validator.isEmpty(assetInfo.getState()) ? "" : "State='"+assetInfo.getState()+"', ");
+		sb.append(Validator.isEmpty(assetInfo.getCountry()) ? "" : "Country='"+assetInfo.getCountry()+"', ");
+		sb.append(Validator.isEmpty(assetInfo.getZipCode()) ? "" : "ZipCode='"+assetInfo.getZipCode()+"'");
+		
+		String str = sb.toString();
+		if (str.endsWith(", ")) {
+			str = str.substring(0, str.length() - ", ".length());
+	    }
+		logger.log(Level.INFO, "populateMultipleUpdateQuery: {0}", str);
+		return str;
+	}
+
 	private void populatePreparedStatement(PreparedStatement ps, AssetInfo assetInfo) throws SQLException{
 		ps.setString(1, assetInfo.getTrackName());
 		ps.setString(2, assetInfo.getBusinessSegment());
@@ -713,7 +679,7 @@ public class AssetInfoDAO {
 		ps.setString(6, assetInfo.getContractedThrough());
 		ps.setString(7, assetInfo.getProductNumber());
 		ps.setString(8, assetInfo.getProductDescription());
-		ps.setInt(9, assetInfo.getQuantity());
+		ps.setString(9, assetInfo.getQuantity());
 		ps.setString(10, assetInfo.getContractNumber());
 		ps.setString(11, assetInfo.getServiceLevel());
 		ps.setString(12, assetInfo.getSerialNumber());
@@ -746,7 +712,7 @@ public class AssetInfoDAO {
 		asset.setContractedThrough(rs.getString("ContractedThrough"));
 		asset.setProductNumber(rs.getString("ProductNumber"));
 		asset.setProductDescription(rs.getString("ProductDescription"));
-		asset.setQuantity(rs.getInt("Quantity"));
+		asset.setQuantity(rs.getString("Quantity"));
 		asset.setContractNumber(rs.getString("ContractNumber"));
 		asset.setServiceLevel(rs.getString("ServiceLevel"));
 		asset.setSerialNumber(rs.getString("SerialNumber"));

@@ -14,7 +14,7 @@ public class AssetInfo implements Serializable{
 	
 	private String productNumber;
 	private String productDescription;
-	private int quantity;
+	private String quantity;
 	private String contractNumber;
 	private String serviceLevel;
 	private String serialNumber;
@@ -89,10 +89,10 @@ public class AssetInfo implements Serializable{
 	public void setProductDescription(String productDescription) {
 		this.productDescription = productDescription;
 	}
-	public int getQuantity() {
+	public String getQuantity() {
 		return quantity;
 	}
-	public void setQuantity(int quantity) {
+	public void setQuantity(String quantity) {
 		this.quantity = quantity;
 	}
 	public String getContractNumber() {
