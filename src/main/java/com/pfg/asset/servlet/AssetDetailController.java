@@ -38,6 +38,7 @@ public class AssetDetailController extends HttpServlet {
 		int visiblePages = AssetConstants.PAGINATION_COUNT;
 
 		try {
+			String action = request.getParameter("action");
 			String currentPage = request.getParameter("currentPage");
 			String recordsPerPage = request.getParameter("recordsPerPage");
 
@@ -51,7 +52,23 @@ public class AssetDetailController extends HttpServlet {
 				records = Integer.parseInt(recordsPerPage);
 			}
 
+        	String assetSelected = request.getParameter(AssetConstants.ROW_SELECTED);
+
+    		List<AssetInfo> assetSelectedList = null;
 			Gson gson = null;
+			if("delete".equalsIgnoreCase(action)) {
+	        	if(Validator.isNotEmpty(assetSelected)) {
+					gson = new Gson();
+			        Type type = new TypeToken<List<AssetInfo>>() {}.getType();
+			        assetSelectedList = gson.fromJson(("["+assetSelected+"]"), type);
+					logger.log(Level.INFO, "assetSelected: {0}", assetSelected );
+
+			    	int rows = DAOFactory.getInstance().getAssetInfoDAO().batchDelete(assetSelectedList);
+					message = rows + " row(s) deleted.";
+			    	request.setAttribute(AssetConstants.MESSAGE_KEY, message);
+	        	}
+			}
+
 			List<AssetInfo> assetInfoList = DAOFactory.getInstance().getAssetInfoDAO().selectAssetInfo(page, records);
 			gson = new Gson();
 	        Type type = new TypeToken<List<AssetInfo>>() {}.getType();

@@ -102,6 +102,24 @@
 					$("#asset_form").submit();
 				}
 			});
+
+			var deleteFlag = true;
+			$("#delete").click(function() {
+			    var data = table.rows( {selected:  true} ).data();
+			    rowSelected = new Array();
+				$.each(data, function( key, value ) {
+					rowSelected.push(JSON.stringify(value));
+				});
+				if(rowSelected.length <= 0){
+					deleteFlag = false;
+		    	}
+				if(deleteFlag == true){
+					$("#action").val("delete");
+					$("#rowSelected").val(rowSelected);
+					$("#asset_form").submit();
+		    	}
+			});
+
 			$("select#currentPage").val("${pagination.currentPage}");
 			$("select#currentPage").change(function() {
 				$("#action").val("");
@@ -247,7 +265,7 @@
 					</div>
 				</div> <!-- pagination -->
 				<div class="justify-content-start">
-					<input type="button" class="btn disabled" id="delete" name="delete" value="<fmt:message key="btn.asset.delete" bundle="${resourceBundle}"/>">		                    
+					<input type="button" class="btn" id="delete" name="delete" value="<fmt:message key="btn.asset.delete" bundle="${resourceBundle}"/>">		                    
 					<input type="button" class="btn ml-5" id="update" name="update" value="<fmt:message key="btn.asset.update" bundle="${resourceBundle}"/>">		                    
 					<input type="button" class="btn ml-5" id="export" name="export" value="<fmt:message key="btn.asset.export" bundle="${resourceBundle}"/>">
 		        </div>

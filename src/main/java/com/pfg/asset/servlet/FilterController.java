@@ -48,6 +48,23 @@ public class FilterController extends HttpServlet {
 			String fromDate = request.getParameter("fromDate");
 			String toDate = request.getParameter("toDate");
 			
+        	String assetSelected = request.getParameter(AssetConstants.ROW_SELECTED);
+
+    		List<AssetInfo> assetSelectedList = null;
+			Gson gson = null;
+			if("delete".equalsIgnoreCase(action)) {
+	        	if(Validator.isNotEmpty(assetSelected)) {
+					gson = new Gson();
+			        Type type = new TypeToken<List<AssetInfo>>() {}.getType();
+			        assetSelectedList = gson.fromJson(("["+assetSelected+"]"), type);
+					logger.log(Level.INFO, "assetSelected: {0}", assetSelected );
+
+			    	int rows = DAOFactory.getInstance().getAssetInfoDAO().batchDelete(assetSelectedList);
+					message = rows + " row(s) deleted.";
+			    	request.setAttribute(AssetConstants.MESSAGE_KEY, message);
+	        	}
+			}
+
 			logger.log(Level.INFO, "filterType: {0}", filterType );
 			logger.log(Level.INFO, "filterValue: {0}", filterValue );
 			logger.log(Level.INFO, "fromDate: {0}", fromDate );
@@ -67,15 +84,18 @@ public class FilterController extends HttpServlet {
 				filterType = AssetConstants.FILTER.RENEWAL.toString();
 			}
 			if(Validator.isEmpty(filterValue)) {
-				if(Validator.isEmpty(renewal)) {
-					if(Validator.isEmpty(fromDate) && Validator.isEmpty(toDate)) {
-						filterValue = AssetConstants.INTERVALS.get(0);
+				if(AssetConstants.FILTER.RENEWAL.toString().equals(filterType)) {
+					if(Validator.isEmpty(renewal)) {
+						if(Validator.isEmpty(fromDate) && Validator.isEmpty(toDate)) {
+							filterValue = AssetConstants.INTERVALS.get(0);
+						}
+					} else {
+						filterValue = renewal;
 					}
-				} else {
-					filterValue = renewal;
+				}else {
+					filterValue = "";
 				}
 			}
-			Gson gson = null;
 			FilterParam filter = new FilterParam();
 			filter.setFilterType(filterType);
 			filter.setFilterValue(filterValue);
@@ -83,6 +103,7 @@ public class FilterController extends HttpServlet {
 			filter.setRecordsPerPage(records);
 			filter.setStartDate(fromDate);
 			filter.setEndDate(toDate);
+			logger.log(Level.INFO, "FilterParam: {0}", filter );
 			
 			List<AssetInfo> filteredList = DAOFactory.getInstance().getAssetInfoDAO().filteredAssetInfo(filter,true);
 			gson = new Gson();
@@ -104,6 +125,7 @@ public class FilterController extends HttpServlet {
 			pagination.setRecordsPerPage(records);
 			pagination.setTotalRecords(noOfRows);
 			pagination.setVisiblePages(visiblePages);
+			logger.log(Level.INFO, "Pagination: {0}", pagination );
 
 			request.setAttribute("filterParam", filter);
 			request.setAttribute("pagination", pagination);

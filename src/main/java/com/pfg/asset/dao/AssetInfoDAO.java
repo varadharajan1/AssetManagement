@@ -26,49 +26,29 @@ public class AssetInfoDAO {
 
 	private String insertAssetInfo = "INSERT INTO AssetInfo (TrackName, BusinessSegment, OPCOName, DeviceName, OEMName, ContractedThrough, ProductNumber, ProductDescription, Quantity, ContractNumber, ServiceLevel, SerialNumber, ServiceLevelDescription, SKU, SupportStartDate, SupportEndDate, EOLDate, PurchasedDate, PurchasedVendor, InstalledDate, PurchasedCost, DeployedLocation, Address1, Address2, City, State, ZipCode, Country) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 	private String deleteAssetInfo = "DELETE FROM AssetInfo WHERE TrackName=? AND BusinessSegment=? AND OPCOName=? AND DeviceName=? AND OEMName=? AND ProductNumber=? AND SerialNumber=? AND SupportEndDate=? AND DeployedLocation=? AND Address1=?";
-	//private String updateAssetInfo = "UPDATE AssetInfo SET TrackName=?, BusinessSegment=?, OPCOName=?, DeviceName=?, OEMName=?, ContractedThrough=?, ProductNumber=?, ProductDescription=?, Quantity=?, ContractNumber=?, ServiceLevel=?, SerialNumber=?, ServiceLevelDescription=?, SKU=?, SupportStartDate=?, SupportEndDate=?, EOLDate=?, PurchasedDate=?, PurchasedVendor=?, InstalledDate=?, PurchasedCost=?, DeployedLocation=?, Address1=?, Address2=?, City=?, State=?, ZipCode=?, Country=?, LastUpdated=CURRENT_DATE WHERE TrackName=? AND BusinessSegment=? AND OPCOName=? AND DeviceName=? AND OEMName=? AND ContractedThrough=? AND ProductNumber=? AND ProductDescription=? AND Quantity=? AND ContractNumber=? AND ServiceLevel=? AND SerialNumber=? AND ServiceLevelDescription=? AND SKU=? AND SupportStartDate=? AND SupportEndDate=? AND EOLDate=? AND PurchasedDate=? AND PurchasedVendor=? AND InstalledDate=? AND PurchasedCost=? AND DeployedLocation=? AND Address1=? AND Address2=? AND City=? AND State=? AND ZipCode=? AND Country=?";
 	private String updateAssetInfo = "UPDATE AssetInfo SET TrackName=?, BusinessSegment=?, OPCOName=?, DeviceName=?, OEMName=?, ContractedThrough=?, ProductNumber=?, ProductDescription=?, Quantity=?, ContractNumber=?, ServiceLevel=?, SerialNumber=?, ServiceLevelDescription=?, SKU=?, SupportStartDate=?, SupportEndDate=?, EOLDate=?, PurchasedDate=?, PurchasedVendor=?, InstalledDate=?, PurchasedCost=?, DeployedLocation=?, Address1=?, Address2=?, City=?, State=?, ZipCode=?, Country=?, LastUpdated=CURRENT_DATE WHERE ~1 AND ~2 AND ~3 AND ~4 AND ~5 AND ~6 AND ~7 AND ~8 AND ~9 AND ~10 AND ~11 AND ~12 AND ~13 AND ~14 AND ~15 AND ~16 AND ~17 AND ~18 AND ~19 AND ~20 AND ~21 AND ~22 AND ~23 AND ~24 AND ~25 AND ~26 AND ~27 AND ~28";
-	private String updateAssetInfoMultiple = "UPDATE AssetInfo SET ~#, LastUpdated=CURRENT_DATE WHERE ~1 AND ~2 AND ~3 AND ~4 AND ~5 AND ~6 AND ~7 AND ~8 AND ~9 AND ~10 AND ~11 AND ~12 AND ~13 AND ~14 AND ~15 AND ~16 AND ~17 AND ~18 AND ~19 AND ~20 AND ~21 AND ~22 AND ~23 AND ~24 AND ~25 AND ~26 AND ~27 AND ~28";
-	
+	private String updateMultipleAssetInfo = "UPDATE AssetInfo SET ~#, LastUpdated=CURRENT_DATE WHERE ~1 AND ~2 AND ~3 AND ~4 AND ~5 AND ~6 AND ~7 AND ~8 AND ~9 AND ~10 AND ~11 AND ~12 AND ~13 AND ~14 AND ~15 AND ~16 AND ~17 AND ~18 AND ~19 AND ~20 AND ~21 AND ~22 AND ~23 AND ~24 AND ~25 AND ~26 AND ~27 AND ~28";
+
 	private String selectAll = "SELECT TrackName, BusinessSegment, OPCOName, DeviceName, OEMName, ContractedThrough, ProductNumber, ProductDescription, Quantity, ContractNumber, ServiceLevel, SerialNumber, ServiceLevelDescription, SKU, SupportStartDate, SupportEndDate, EOLDate, PurchasedDate, PurchasedVendor, InstalledDate, PurchasedCost, DeployedLocation, Address1, Address2, City, State, ZipCode, Country, Created, LastUpdated, UpdatedBy FROM AssetInfo ORDER BY SupportStartDate, SupportEndDate";
 	private String selectLimit = "SELECT TrackName, BusinessSegment, OPCOName, DeviceName, OEMName, ContractedThrough, ProductNumber, ProductDescription, Quantity, ContractNumber, ServiceLevel, SerialNumber, ServiceLevelDescription, SKU, SupportStartDate, SupportEndDate, EOLDate, PurchasedDate, PurchasedVendor, InstalledDate, PurchasedCost, DeployedLocation, Address1, Address2, City, State, ZipCode, Country, Created, LastUpdated, UpdatedBy FROM AssetInfo ORDER BY SupportStartDate, SupportEndDate OFFSET ? LIMIT ?";
 	private String selectCount = "SELECT count(*) FROM AssetInfo";
 	
 	private String filterByRenewalLimit = "SELECT TrackName, BusinessSegment, OPCOName, DeviceName, OEMName, ContractedThrough, ProductNumber, ProductDescription, Quantity, ContractNumber, ServiceLevel, SerialNumber, ServiceLevelDescription, SKU, SupportStartDate, SupportEndDate, EOLDate, PurchasedDate, PurchasedVendor, InstalledDate, PurchasedCost, DeployedLocation, Address1, Address2, City, State, ZipCode, Country, Created, LastUpdated, UpdatedBy FROM AssetInfo WHERE SupportEndDate <= (CURRENT_DATE + ?::interval) ORDER BY SupportStartDate, SupportEndDate OFFSET ? LIMIT ?";
-	private String filterByOEMLimit = "SELECT TrackName, BusinessSegment, OPCOName, DeviceName, OEMName, ContractedThrough, ProductNumber, ProductDescription, Quantity, ContractNumber, ServiceLevel, SerialNumber, ServiceLevelDescription, SKU, SupportStartDate, SupportEndDate, EOLDate, PurchasedDate, PurchasedVendor, InstalledDate, PurchasedCost, DeployedLocation, Address1, Address2, City, State, ZipCode, Country, Created, LastUpdated, UpdatedBy FROM AssetInfo WHERE OEMName=? ORDER BY SupportStartDate, SupportEndDate OFFSET ? LIMIT ?";
-	private String filterByBusinessSegmentLimit = "SELECT TrackName, BusinessSegment, OPCOName, DeviceName, OEMName, ContractedThrough, ProductNumber, ProductDescription, Quantity, ContractNumber, ServiceLevel, SerialNumber, ServiceLevelDescription, SKU, SupportStartDate, SupportEndDate, EOLDate, PurchasedDate, PurchasedVendor, InstalledDate, PurchasedCost, DeployedLocation, Address1, Address2, City, State, ZipCode, Country, Created, LastUpdated, UpdatedBy FROM AssetInfo WHERE BusinessSegment=? ORDER BY SupportStartDate, SupportEndDate OFFSET ? LIMIT ?";
-	private String filterByOPCONameLimit = "SELECT TrackName, BusinessSegment, OPCOName, DeviceName, OEMName, ContractedThrough, ProductNumber, ProductDescription, Quantity, ContractNumber, ServiceLevel, SerialNumber, ServiceLevelDescription, SKU, SupportStartDate, SupportEndDate, EOLDate, PurchasedDate, PurchasedVendor, InstalledDate, PurchasedCost, DeployedLocation, Address1, Address2, City, State, ZipCode, Country, Created, LastUpdated, UpdatedBy FROM AssetInfo WHERE OPCOName=? ORDER BY SupportStartDate, SupportEndDate OFFSET ? LIMIT ?";
-	private String filterByTrackLimit = "SELECT TrackName, BusinessSegment, OPCOName, DeviceName, OEMName, ContractedThrough, ProductNumber, ProductDescription, Quantity, ContractNumber, ServiceLevel, SerialNumber, ServiceLevelDescription, SKU, SupportStartDate, SupportEndDate, EOLDate, PurchasedDate, PurchasedVendor, InstalledDate, PurchasedCost, DeployedLocation, Address1, Address2, City, State, ZipCode, Country, Created, LastUpdated, UpdatedBy FROM AssetInfo WHERE TrackName=? ORDER BY SupportStartDate, SupportEndDate OFFSET ? LIMIT ?";
-	private String filterByProductLimit = "SELECT TrackName, BusinessSegment, OPCOName, DeviceName, OEMName, ContractedThrough, ProductNumber, ProductDescription, Quantity, ContractNumber, ServiceLevel, SerialNumber, ServiceLevelDescription, SKU, SupportStartDate, SupportEndDate, EOLDate, PurchasedDate, PurchasedVendor, InstalledDate, PurchasedCost, DeployedLocation, Address1, Address2, City, State, ZipCode, Country, Created, LastUpdated, UpdatedBy FROM AssetInfo WHERE ProductNumber=? ORDER BY SupportStartDate, SupportEndDate OFFSET ? LIMIT ?";
-	private String filterBySerialNumberLimit = "SELECT TrackName, BusinessSegment, OPCOName, DeviceName, OEMName, ContractedThrough, ProductNumber, ProductDescription, Quantity, ContractNumber, ServiceLevel, SerialNumber, ServiceLevelDescription, SKU, SupportStartDate, SupportEndDate, EOLDate, PurchasedDate, PurchasedVendor, InstalledDate, PurchasedCost, DeployedLocation, Address1, Address2, City, State, ZipCode, Country, Created, LastUpdated, UpdatedBy FROM AssetInfo WHERE SerialNumber=? ORDER BY SupportStartDate, SupportEndDate OFFSET ? LIMIT ?";
-	private String filterByLocationLimit = "SELECT TrackName, BusinessSegment, OPCOName, DeviceName, OEMName, ContractedThrough, ProductNumber, ProductDescription, Quantity, ContractNumber, ServiceLevel, SerialNumber, ServiceLevelDescription, SKU, SupportStartDate, SupportEndDate, EOLDate, PurchasedDate, PurchasedVendor, InstalledDate, PurchasedCost, DeployedLocation, Address1, Address2, City, State, ZipCode, Country, Created, LastUpdated, UpdatedBy FROM AssetInfo WHERE DeployedLocation=? ORDER BY SupportStartDate, SupportEndDate OFFSET ? LIMIT ?";
-	private String filterByAddressLimit = "SELECT TrackName, BusinessSegment, OPCOName, DeviceName, OEMName, ContractedThrough, ProductNumber, ProductDescription, Quantity, ContractNumber, ServiceLevel, SerialNumber, ServiceLevelDescription, SKU, SupportStartDate, SupportEndDate, EOLDate, PurchasedDate, PurchasedVendor, InstalledDate, PurchasedCost, DeployedLocation, Address1, Address2, City, State, ZipCode, Country, Created, LastUpdated, UpdatedBy FROM AssetInfo WHERE Address1=? ORDER BY SupportStartDate, SupportEndDate OFFSET ? LIMIT ?";
 	private String filterByExpiringDateLimit = "SELECT TrackName, BusinessSegment, OPCOName, DeviceName, OEMName, ContractedThrough, ProductNumber, ProductDescription, Quantity, ContractNumber, ServiceLevel, SerialNumber, ServiceLevelDescription, SKU, SupportStartDate, SupportEndDate, EOLDate, PurchasedDate, PurchasedVendor, InstalledDate, PurchasedCost, DeployedLocation, Address1, Address2, City, State, ZipCode, Country, Created, LastUpdated, UpdatedBy FROM AssetInfo WHERE SupportEndDate BETWEEN ? AND ? ORDER BY SupportStartDate, SupportEndDate OFFSET ? LIMIT ?";
 	private String filterByExpiredDateLimit = "SELECT TrackName, BusinessSegment, OPCOName, DeviceName, OEMName, ContractedThrough, ProductNumber, ProductDescription, Quantity, ContractNumber, ServiceLevel, SerialNumber, ServiceLevelDescription, SKU, SupportStartDate, SupportEndDate, EOLDate, PurchasedDate, PurchasedVendor, InstalledDate, PurchasedCost, DeployedLocation, Address1, Address2, City, State, ZipCode, Country, Created, LastUpdated, UpdatedBy FROM AssetInfo WHERE SupportEndDate < CURRENT_DATE ORDER BY SupportStartDate, SupportEndDate OFFSET ? LIMIT ?";
 
 	private String filterByRenewal = "SELECT TrackName, BusinessSegment, OPCOName, DeviceName, OEMName, ContractedThrough, ProductNumber, ProductDescription, Quantity, ContractNumber, ServiceLevel, SerialNumber, ServiceLevelDescription, SKU, SupportStartDate, SupportEndDate, EOLDate, PurchasedDate, PurchasedVendor, InstalledDate, PurchasedCost, DeployedLocation, Address1, Address2, City, State, ZipCode, Country, Created, LastUpdated, UpdatedBy FROM AssetInfo WHERE SupportEndDate <= (CURRENT_DATE + ?::interval) ORDER BY SupportStartDate, SupportEndDate";
-	private String filterByOEM = "SELECT TrackName, BusinessSegment, OPCOName, DeviceName, OEMName, ContractedThrough, ProductNumber, ProductDescription, Quantity, ContractNumber, ServiceLevel, SerialNumber, ServiceLevelDescription, SKU, SupportStartDate, SupportEndDate, EOLDate, PurchasedDate, PurchasedVendor, InstalledDate, PurchasedCost, DeployedLocation, Address1, Address2, City, State, ZipCode, Country, Created, LastUpdated, UpdatedBy FROM AssetInfo WHERE OEMName=? ORDER BY SupportStartDate, SupportEndDate";
-	private String filterByBusinessSegment = "SELECT TrackName, BusinessSegment, OPCOName, DeviceName, OEMName, ContractedThrough, ProductNumber, ProductDescription, Quantity, ContractNumber, ServiceLevel, SerialNumber, ServiceLevelDescription, SKU, SupportStartDate, SupportEndDate, EOLDate, PurchasedDate, PurchasedVendor, InstalledDate, PurchasedCost, DeployedLocation, Address1, Address2, City, State, ZipCode, Country, Created, LastUpdated, UpdatedBy FROM AssetInfo WHERE BusinessSegment=? ORDER BY SupportStartDate, SupportEndDate";
-	private String filterByOPCOName = "SELECT TrackName, BusinessSegment, OPCOName, DeviceName, OEMName, ContractedThrough, ProductNumber, ProductDescription, Quantity, ContractNumber, ServiceLevel, SerialNumber, ServiceLevelDescription, SKU, SupportStartDate, SupportEndDate, EOLDate, PurchasedDate, PurchasedVendor, InstalledDate, PurchasedCost, DeployedLocation, Address1, Address2, City, State, ZipCode, Country, Created, LastUpdated, UpdatedBy FROM AssetInfo WHERE OPCOName=? ORDER BY SupportStartDate, SupportEndDate";
-	private String filterByTrack = "SELECT TrackName, BusinessSegment, OPCOName, DeviceName, OEMName, ContractedThrough, ProductNumber, ProductDescription, Quantity, ContractNumber, ServiceLevel, SerialNumber, ServiceLevelDescription, SKU, SupportStartDate, SupportEndDate, EOLDate, PurchasedDate, PurchasedVendor, InstalledDate, PurchasedCost, DeployedLocation, Address1, Address2, City, State, ZipCode, Country, Created, LastUpdated, UpdatedBy FROM AssetInfo WHERE TrackName=? ORDER BY SupportStartDate, SupportEndDate";
-	private String filterByProduct = "SELECT TrackName, BusinessSegment, OPCOName, DeviceName, OEMName, ContractedThrough, ProductNumber, ProductDescription, Quantity, ContractNumber, ServiceLevel, SerialNumber, ServiceLevelDescription, SKU, SupportStartDate, SupportEndDate, EOLDate, PurchasedDate, PurchasedVendor, InstalledDate, PurchasedCost, DeployedLocation, Address1, Address2, City, State, ZipCode, Country, Created, LastUpdated, UpdatedBy FROM AssetInfo WHERE ProductNumber=? ORDER BY SupportStartDate, SupportEndDate";
-	private String filterBySerialNumber = "SELECT TrackName, BusinessSegment, OPCOName, DeviceName, OEMName, ContractedThrough, ProductNumber, ProductDescription, Quantity, ContractNumber, ServiceLevel, SerialNumber, ServiceLevelDescription, SKU, SupportStartDate, SupportEndDate, EOLDate, PurchasedDate, PurchasedVendor, InstalledDate, PurchasedCost, DeployedLocation, Address1, Address2, City, State, ZipCode, Country, Created, LastUpdated, UpdatedBy FROM AssetInfo WHERE SerialNumber=? ORDER BY SupportStartDate, SupportEndDate";
-	private String filterByLocation = "SELECT TrackName, BusinessSegment, OPCOName, DeviceName, OEMName, ContractedThrough, ProductNumber, ProductDescription, Quantity, ContractNumber, ServiceLevel, SerialNumber, ServiceLevelDescription, SKU, SupportStartDate, SupportEndDate, EOLDate, PurchasedDate, PurchasedVendor, InstalledDate, PurchasedCost, DeployedLocation, Address1, Address2, City, State, ZipCode, Country, Created, LastUpdated, UpdatedBy FROM AssetInfo WHERE DeployedLocation=? ORDER BY SupportStartDate, SupportEndDate";
-	private String filterByAddress = "SELECT TrackName, BusinessSegment, OPCOName, DeviceName, OEMName, ContractedThrough, ProductNumber, ProductDescription, Quantity, ContractNumber, ServiceLevel, SerialNumber, ServiceLevelDescription, SKU, SupportStartDate, SupportEndDate, EOLDate, PurchasedDate, PurchasedVendor, InstalledDate, PurchasedCost, DeployedLocation, Address1, Address2, City, State, ZipCode, Country, Created, LastUpdated, UpdatedBy FROM AssetInfo WHERE Address1=? ORDER BY SupportStartDate, SupportEndDate";
 	private String filterByExpiringDate = "SELECT TrackName, BusinessSegment, OPCOName, DeviceName, OEMName, ContractedThrough, ProductNumber, ProductDescription, Quantity, ContractNumber, ServiceLevel, SerialNumber, ServiceLevelDescription, SKU, SupportStartDate, SupportEndDate, EOLDate, PurchasedDate, PurchasedVendor, InstalledDate, PurchasedCost, DeployedLocation, Address1, Address2, City, State, ZipCode, Country, Created, LastUpdated, UpdatedBy FROM AssetInfo WHERE SupportEndDate BETWEEN ? AND ? ORDER BY SupportStartDate, SupportEndDate";
 	private String filterByExpiredDate = "SELECT TrackName, BusinessSegment, OPCOName, DeviceName, OEMName, ContractedThrough, ProductNumber, ProductDescription, Quantity, ContractNumber, ServiceLevel, SerialNumber, ServiceLevelDescription, SKU, SupportStartDate, SupportEndDate, EOLDate, PurchasedDate, PurchasedVendor, InstalledDate, PurchasedCost, DeployedLocation, Address1, Address2, City, State, ZipCode, Country, Created, LastUpdated, UpdatedBy FROM AssetInfo WHERE SupportEndDate < CURRENT_DATE ORDER BY SupportStartDate, SupportEndDate";
 
+	private String filterBy = "SELECT TrackName, BusinessSegment, OPCOName, DeviceName, OEMName, ContractedThrough, ProductNumber, ProductDescription, Quantity, ContractNumber, ServiceLevel, SerialNumber, ServiceLevelDescription, SKU, SupportStartDate, SupportEndDate, EOLDate, PurchasedDate, PurchasedVendor, InstalledDate, PurchasedCost, DeployedLocation, Address1, Address2, City, State, ZipCode, Country, Created, LastUpdated, UpdatedBy FROM AssetInfo WHERE ~# ORDER BY SupportStartDate, SupportEndDate";
+	private String filterByLimit = "SELECT TrackName, BusinessSegment, OPCOName, DeviceName, OEMName, ContractedThrough, ProductNumber, ProductDescription, Quantity, ContractNumber, ServiceLevel, SerialNumber, ServiceLevelDescription, SKU, SupportStartDate, SupportEndDate, EOLDate, PurchasedDate, PurchasedVendor, InstalledDate, PurchasedCost, DeployedLocation, Address1, Address2, City, State, ZipCode, Country, Created, LastUpdated, UpdatedBy FROM AssetInfo WHERE ~# ORDER BY SupportStartDate, SupportEndDate OFFSET ? LIMIT ?";
+
 	private String filterByRenewalCount = "SELECT count(*) FROM AssetInfo WHERE SupportEndDate <= (CURRENT_DATE + ?::interval)";
-	private String filterByOEMCount = "SELECT count(*) FROM AssetInfo WHERE OEMName=?";
-	private String filterByBusinessSegmentCount = "SELECT count(*) FROM AssetInfo WHERE BusinessSegment=?";
-	private String filterByOPCONameCount = "SELECT count(*) FROM AssetInfo WHERE OPCOName=?";
-	private String filterByTrackCount = "SELECT count(*) FROM AssetInfo WHERE TrackName=?";
-	private String filterByProductCount = "SELECT count(*) FROM AssetInfo WHERE ProductNumber=?";
-	private String filterBySerialNumberCount = "SELECT count(*) FROM AssetInfo WHERE SerialNumber=?";
-	private String filterByLocationCount = "SELECT count(*) FROM AssetInfo WHERE DeployedLocation=?";
-	private String filterByAddressCount = "SELECT count(*) FROM AssetInfo WHERE Address1=?";
 	private String filterByExpiringDateCount = "SELECT count(*) FROM AssetInfo WHERE SupportEndDate BETWEEN ? AND ?";
 	private String filterByExpiredDateCount = "SELECT count(*) FROM AssetInfo WHERE SupportEndDate < CURRENT_DATE";
+
+	private String filterByCount = "SELECT count(*) FROM AssetInfo WHERE ~#";
 
 	public int insertAssetInfo(AssetInfo assetInfo) {
 		logger.log(Level.INFO, "entered");
@@ -308,7 +288,7 @@ public class AssetInfoDAO {
 
 
 				if(isMultipleUpdate) {
-					query = updateAssetInfoMultiple;
+					query = updateMultipleAssetInfo;
 					String str = populateMultipleUpdateQuery(newAssetInfo);
 					query = query.replaceFirst("~#",str);
 				}else {
@@ -457,24 +437,26 @@ public class AssetInfoDAO {
 	    	if(filter != null) {
 		    	conn = DataSourceListener.getAssetDS().getConnection();
 				logger.log(Level.INFO, "Filter type: {0}", filter.getFilterType());
+				logger.log(Level.INFO, "Filter value: {0}", filter.getFilterValue());
 
 				String query = "";
+				query = pagination ? filterByLimit : filterBy;
 				if("PRODUCT".equals(filter.getFilterType())) {
-					query = pagination ? filterByProductLimit : filterByProduct;
+					query = query.replaceFirst("~#", Validator.isEmpty(filter.getFilterValue()) ? "ProductNumber IS NULL": "ProductNumber='"+filter.getFilterValue()+"'");
 				} else if ("SERIAL".equals(filter.getFilterType())) {
-					query = pagination ? filterBySerialNumberLimit : filterBySerialNumber;
+					query = query.replaceFirst("~#", Validator.isEmpty(filter.getFilterValue()) ? "SerialNumber IS NULL": "SerialNumber='"+filter.getFilterValue()+"'");
 				} else if ("LOCATION".equals(filter.getFilterType())) {
-					query = pagination ? filterByLocationLimit : filterByLocation;
+					query = query.replaceFirst("~#", Validator.isEmpty(filter.getFilterValue()) ? "DeployedLocation IS NULL": "DeployedLocation='"+filter.getFilterValue()+"'");
 				} else if ("ADDRESS".equals(filter.getFilterType())) {
-					query = pagination ? filterByAddressLimit : filterByAddress;
+					query = query.replaceFirst("~#", Validator.isEmpty(filter.getFilterValue()) ? "Address1 IS NULL": "Address1='"+filter.getFilterValue()+"'");
 				} else if ("TRACK".equals(filter.getFilterType())) {
-					query = pagination ? filterByTrackLimit : filterByTrack;
+					query = query.replaceFirst("~#", Validator.isEmpty(filter.getFilterValue()) ? "TrackName IS NULL": "TrackName='"+filter.getFilterValue()+"'");
 				} else if ("OEM".equals(filter.getFilterType())) {
-					query = pagination ? filterByOEMLimit : filterByOEM;
+					query = query.replaceFirst("~#", Validator.isEmpty(filter.getFilterValue()) ? "OEMName IS NULL": "OEMName='"+filter.getFilterValue()+"'");
 				} else if ("OPCO".equals(filter.getFilterType())) {
-					query = pagination ? filterByOPCONameLimit : filterByOPCOName;
+					query = query.replaceFirst("~#", Validator.isEmpty(filter.getFilterValue()) ? "OPCOName IS NULL": "OPCOName='"+filter.getFilterValue()+"'");
 				} else if ("BUSINESS".equals(filter.getFilterType())) {
-					query = pagination ? filterByBusinessSegmentLimit : filterByBusinessSegment;
+					query = query.replaceFirst("~#", Validator.isEmpty(filter.getFilterValue()) ? "BusinessSegment IS NULL": "BusinessSegment='"+filter.getFilterValue()+"'");
 				} else if ("DATE".equals(filter.getFilterType())) {
 					query = pagination ? filterByExpiringDateLimit : filterByExpiringDate;
 				} else if ("EXPIRED".equals(filter.getFilterType())) {
@@ -491,7 +473,7 @@ public class AssetInfoDAO {
 						ps.setInt(3, offset);
 						ps.setInt(4, filter.getRecordsPerPage());
 					}
-				} else if (!"EXPIRED".equals(filter.getFilterType())){
+				} else if ("RENEWAL".equals(filter.getFilterType())){
 					ps.setString(1, filter.getFilterValue());
 					if(pagination) {
 						int offset = (filter.getCurrentPage() * filter.getRecordsPerPage()) - filter.getRecordsPerPage();
@@ -540,22 +522,23 @@ public class AssetInfoDAO {
 			if(filter != null) {
 				logger.log(Level.INFO, "Filter type: {0}", filter.getFilterType());
 
+				query = filterByCount;
 				if("PRODUCT".equals(filter.getFilterType())) {
-					query = filterByProductCount;
+					query = query.replaceFirst("~#", Validator.isEmpty(filter.getFilterValue()) ? "ProductNumber IS NULL": "ProductNumber='"+filter.getFilterValue()+"'");
 				} else if ("SERIAL".equals(filter.getFilterType())) {
-					query = filterBySerialNumberCount;
+					query = query.replaceFirst("~#", Validator.isEmpty(filter.getFilterValue()) ? "SerialNumber IS NULL": "SerialNumber='"+filter.getFilterValue()+"'");
 				} else if ("LOCATION".equals(filter.getFilterType())) {
-					query = filterByLocationCount;
+					query = query.replaceFirst("~#", Validator.isEmpty(filter.getFilterValue()) ? "DeployedLocation IS NULL": "DeployedLocation='"+filter.getFilterValue()+"'");
 				} else if ("ADDRESS".equals(filter.getFilterType())) {
-					query = filterByAddressCount;
+					query = query.replaceFirst("~#", Validator.isEmpty(filter.getFilterValue()) ? "Address1 IS NULL": "Address1='"+filter.getFilterValue()+"'");
 				} else if ("TRACK".equals(filter.getFilterType())) {
-					query = filterByTrackCount;
+					query = query.replaceFirst("~#", Validator.isEmpty(filter.getFilterValue()) ? "TrackName IS NULL": "TrackName='"+filter.getFilterValue()+"'");
 				} else if ("OEM".equals(filter.getFilterType())) {
-					query = filterByOEMCount;
+					query = query.replaceFirst("~#", Validator.isEmpty(filter.getFilterValue()) ? "OEMName IS NULL": "OEMName='"+filter.getFilterValue()+"'");
 				} else if ("OPCO".equals(filter.getFilterType())) {
-					query = filterByOPCONameCount;
+					query = query.replaceFirst("~#", Validator.isEmpty(filter.getFilterValue()) ? "OPCOName IS NULL": "OPCOName='"+filter.getFilterValue()+"'");
 				} else if ("BUSINESS".equals(filter.getFilterType())) {
-					query = filterByBusinessSegmentCount;
+					query = query.replaceFirst("~#", Validator.isEmpty(filter.getFilterValue()) ? "BusinessSegment IS NULL": "BusinessSegment='"+filter.getFilterValue()+"'");
 				} else if ("DATE".equals(filter.getFilterType())) {
 					query = filterByExpiringDateCount;
 				} else if ("EXPIRED".equals(filter.getFilterType())) {
@@ -567,7 +550,7 @@ public class AssetInfoDAO {
 				if ("DATE".equals(filter.getFilterType())) {
 					ps.setObject(1, ValueConvertor.convertToLocalDate(filter.getStartDate(), AssetConstants.DEFAULT_DATEFORMAT));
 					ps.setObject(2, ValueConvertor.convertToLocalDate(filter.getEndDate(), AssetConstants.DEFAULT_DATEFORMAT));
-				} else if (!"EXPIRED".equals(filter.getFilterType())){
+				} else if ("RENEWAL".equals(filter.getFilterType())){
 					ps.setString(1, filter.getFilterValue());
 				}
 			} else {
